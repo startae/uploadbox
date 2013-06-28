@@ -2,7 +2,15 @@ PATH
   remote: .
   specs:
     file_uploader (0.0.1)
+      carrierwave (~> 0.8.0)
+      carrierwave-processing (~> 0.0.2)
+      coffee-rails (~> 4.0.0)
+      fog (~> 1.12.1)
+      jbuilder (~> 1.4.2)
+      mini_magick (~> 3.6.0)
       rails (~> 4.0.0)
+      sass-rails (~> 4.0.0)
+      slim (~> 1.3.8)
 
 GEM
   remote: https://rubygems.org/
@@ -150,7 +158,6 @@ DEPENDENCIES
   jbuilder (~> 1.4.2)
   jquery-rails (~> 3.0.1)
   mini_magick (~> 3.6.0)
-  sass (~> 3.2.9)
   sass-rails (~> 4.0.0)
   slim (~> 1.3.8)
   sqlite3
