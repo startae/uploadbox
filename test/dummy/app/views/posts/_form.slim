@@ -14,14 +14,14 @@
       div data-component="ImageUploader"
         input name="image_id" data-item="id" type="hidden"
         .fileupload data-provides="fileupload" class="fileupload-#{@post.image? ? 'exists' : 'new'}"
-          .fileupload-preview.thumbnail style="width: 50px; height: 50px;"
+          .fileupload-preview.thumbnail
             = image_tag @post.image.file.regular, width: 50, height: 50 if @post.image?
-          div
+          = link_to 'Excluir', image_path(@post.image), class: 'btn fileupload-exists fileupload-remove', title: 'Excluir imagem', remote: true, method: :delete
+          .fileupload-actions
             span.btn.btn-file
               span.fileupload-new Escolher imagem
-              span.fileupload-exists Alterar
+              span.fileupload-exists Alterar imagem
               input type="file" data-url="#{images_path}" name="image[file]"
-            = link_to 'Excluir', image_path(@post.image), class: 'btn fileupload-exists', remote: true, method: :delete
 
 
   .field
