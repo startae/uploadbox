@@ -1,5 +1,6 @@
 class @ImageUploader
   constructor: (@container) ->
+    @preview = @container.find('[data-provides="fileupload"]')
     @fileInput = @container.find('input[type="file"]')
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
@@ -11,8 +12,8 @@ class @ImageUploader
       done: @done
 
   add: (e, data) =>
-    @loader = $('<div class="progress progress-striped"><div class="bar" style="width: 0%;"></div></div>').hide()
-    @container.append(@loader.fadeIn())
+    @loader = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>').hide()
+    @preview.prepend(@loader.fadeIn())
     data.submit()
 
   progress: (e, data) =>
