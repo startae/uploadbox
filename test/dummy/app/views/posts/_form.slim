@@ -7,26 +7,8 @@
       - @post.errors.full_messages.each do |msg|
           li = msg
 
-
-
   .field
-    = f.fields_for :image do |image|
-      div data-component="ImageUploader"
-        input name="image_id" data-item="id" type="hidden"
-        .fileupload data-provides="fileupload" class="fileupload-#{@post.image? ? 'exists' : 'new'}"
-          .fileupload-preview.thumbnail
-            = image_tag @post.image.file.regular, width: 50, height: 50 if @post.image?
-          = link_to 'Excluir', image_path(@post.image), class: 'btn fileupload-exists fileupload-remove', title: 'Excluir imagem', remote: true, method: :delete
-          .fileupload-actions
-            span.btn.btn-file
-              span.fileupload-new Escolher imagem
-              span.fileupload-exists Alterar imagem
-              input type="file" data-url="#{file_uploader.images_path}" name="image[file]"
-            - if @post.image?
-              = link_to 'Excluir', file_uploader.image_path(@post.image), class: 'btn fileupload-exists', remote: true, method: :delete
-            - else
-              = link_to 'Excluir', '#', class: 'btn fileupload-exists', remote: true, method: :delete
-
+    = f.image_uploader
 
   .field
     = f.label :title

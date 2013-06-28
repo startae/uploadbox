@@ -1,0 +1,16 @@
+= form.fields_for :image do
+  div data-component="ImageUploader"
+    input name="image_id" data-item="id" type="hidden"
+    .fileupload data-provides="fileupload" class="fileupload-#{resource.image? ? 'exists' : 'new'}"
+      .fileupload-preview.thumbnail style="width: 50px; height: 50px;"
+        = image_tag resource.image.file.regular, width: 50, height: 50 if resource.image?
+      div
+        span.btn.btn-file
+          span.fileupload-new Escolher imagem
+          span.fileupload-exists Alterar
+          input type="file" data-url="#{file_uploader.images_path}" name="image[file]"
+        - if resource.image?
+          = link_to 'Excluir', file_uploader.image_path(resource.image), class: 'btn fileupload-exists', remote: true, method: :delete
+        - else
+          = link_to 'Excluir', '#', class: 'btn fileupload-exists', remote: true, method: :delete
+
