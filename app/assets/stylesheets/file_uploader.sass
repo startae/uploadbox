@@ -1,5 +1,10 @@
-@import bootstrap/buttons
 @import bootstrap/progress
+
+.btn
+  background-color: #f7f7f7
+  padding: 10px
+  text-align: center
+  text-decoration: none
 
 .clearfix
   *zoom: 1
@@ -24,14 +29,13 @@
   display: block
   width: 100%
   min-height: 30px
-  -webkit-box-sizing: border-box
-  -moz-box-sizing: border-box
   box-sizing: border-box
 
 .btn-file
   overflow: hidden
   position: relative
   vertical-align: middle
+  display: block
   > input
     position: absolute
     top: 0
@@ -43,9 +47,12 @@
     font-size: 23px
     direction: ltr
     cursor: pointer
+    width: 100%
 
 .fileupload
-  margin-bottom: 9px
+  position: relative
+  background-color: #eee
+  text-align: center
   .uneditable-input
     display: inline-block
     margin-bottom: 0px
@@ -54,7 +61,6 @@
   .thumbnail
     overflow: hidden
     display: inline-block
-    margin-bottom: 5px
     vertical-align: middle
     text-align: center
     > img
@@ -71,18 +77,12 @@
   display: inline
 
 .fileupload-new .input-append .btn-file
-  -webkit-border-radius: 0 3px 3px 0
-  -moz-border-radius: 0 3px 3px 0
   border-radius: 0 3px 3px 0
 
 .thumbnail-borderless .thumbnail
   border: none
   padding: 0
-  -webkit-border-radius: 0
-  -moz-border-radius: 0
   border-radius: 0
-  -webkit-box-shadow: none
-  -moz-box-shadow: none
   box-shadow: none
 
 .fileupload-new.thumbnail-borderless .thumbnail
@@ -117,3 +117,18 @@
 .fileupload-new .fileupload-preview
   display: none
 
+.fileupload-preview
+  text-align: center
+
+.fileupload-remove
+  position: absolute
+  top: 0
+  right: 0
+
+.fileupload-actions
+  position: relative
+
+.progress
+  height: 14px
+  margin-bottom: 0
+  border-radius: 0
