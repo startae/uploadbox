@@ -23,6 +23,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.image = Image.find_by(id: params[:image_id])
+
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
@@ -33,6 +34,7 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1
   def update
     @post.image = Image.find_by(id: params[:image_id])
+
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else

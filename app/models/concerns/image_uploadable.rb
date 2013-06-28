@@ -2,7 +2,7 @@ module ImageUploadable
   extend ActiveSupport::Concern
 
   included do
-    has_one :image, as: :imageable
+    has_one :image, as: :imageable, dependent: :destroy
   end
 
   def image?
