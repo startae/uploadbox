@@ -1,0 +1,40 @@
+= form_for(@post) do |f|
+  - if @post.errors.any?
+    #error_explanation
+      h2 #{pluralize(@post.errors.count, "error")} prohibited this post from being saved
+
+      ul
+      - @post.errors.full_messages.each do |msg|
+          li = msg
+
+
+
+  .field
+    = f.fields_for :image do |image|
+      div data-component="ImageUploader"
+        input name="image_id" data-item="id" type="hidden"
+        .fileupload data-provides="fileupload" class="fileupload-#{@post.image? ? 'exists' : 'new'}"
+          .fileupload-preview.thumbnail style="width: 50px; height: 50px;"
+            = image_tag @post.image.file.regular, width: 50, height: 50 if @post.image?
+          div
+            span.btn.btn-file
+              span.fileupload-new Escolher imagem
+              span.fileupload-exists Alterar
+              input type="file" data-url="#{images_path}" name="image[file]"
+            = link_to 'Excluir', image_path(@post.image), class: 'btn fileupload-exists', remote: true, method: :delete
+
+
+  .field
+    = f.label :title
+    = f.text_field :title
+
+
+  .field
+    = f.label :body
+    = f.text_area :body
+
+
+  .actions
+    = f.submit
+
+
