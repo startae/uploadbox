@@ -21,7 +21,11 @@
             span.btn.btn-file
               span.fileupload-new Escolher imagem
               span.fileupload-exists Alterar imagem
-              input type="file" data-url="#{images_path}" name="image[file]"
+              input type="file" data-url="#{file_uploader.images_path}" name="image[file]"
+            - if @post.image?
+              = link_to 'Excluir', file_uploader.image_path(@post.image), class: 'btn fileupload-exists', remote: true, method: :delete
+            - else
+              = link_to 'Excluir', '#', class: 'btn fileupload-exists', remote: true, method: :delete
 
 
   .field
