@@ -8,6 +8,10 @@ module FileUploader
       copy_file 'initializers/carrierwave.rb', 'config/initializers/carrierwave.rb'
     end
 
+    def update_gitignore
+      append_to_file '.gitignore', 'public/uploads'
+    end
+
     def create_uploader
       copy_file 'uploaders/image_uploader.rb', 'app/uploaders/image_uploader.rb'
     end
