@@ -8,15 +8,15 @@ require 'mini_magick'
 require 'jbuilder'
 
 
-module FileUploader
+module Uploadbox
   class Engine < ::Rails::Engine
     config.autoload_paths << File.expand_path('../../../app/uploaders/concerns', __FILE__)
-    isolate_namespace FileUploader
+    isolate_namespace Uploadbox
   end
 end
 
 class ActionView::Helpers::FormBuilder
   def image_uploader
-    @template.render partial: 'file_uploader/images/uploader', locals: {resource: @object, form: self}
+    @template.render partial: 'uploadbox/images/uploader', locals: {resource: @object, form: self}
   end
 end

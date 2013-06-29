@@ -1,3 +1,3 @@
-FileUploader::Engine.routes.draw do
+Uploadbox::Engine.routes.draw do
   resources :images, only: [:create, :update, :destroy]
 end

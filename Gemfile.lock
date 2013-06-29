@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    file_uploader (0.0.1)
+    uploadbox (0.0.1)
       carrierwave (~> 0.8.0)
       carrierwave-processing (~> 0.0.2)
       coffee-rails (~> 4.0.0)
@@ -150,6 +150,6 @@ PLATFORMS
 DEPENDENCIES
   better_errors (~> 0.9.0)
   binding_of_caller (~> 0.7.2)
-  file_uploader!
   jquery-rails (~> 3.0.1)
   sqlite3
+  uploadbox!

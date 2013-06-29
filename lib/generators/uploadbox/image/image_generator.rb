@@ -1,4 +1,4 @@
-module FileUploader
+module Uploadbox
   class ImageGenerator < Rails::Generators::Base
     include Rails::Generators::Migration
 

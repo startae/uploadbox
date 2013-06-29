@@ -1,4 +1,4 @@
 # desc "Explaining what the task does"
-# task :file_uploader do
+# task :uploadbox do
 #   # Task goes here
 # end

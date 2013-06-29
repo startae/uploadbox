@@ -1,15 +1,15 @@
 $:.push File.expand_path('../lib', __FILE__)
 
-require 'file_uploader/version'
+require 'uploadbox/version'
 
 Gem::Specification.new do |s|
   s.name        = 'uploadbox'
-  s.version     = FileUploader::VERSION
+  s.version     = Uploadbox::VERSION
   s.authors     = ['Julio Protzek', 'Renato Carvalho']
   s.email       = ['julio@startae.com.br', 'renato@startae.com.br']
-  s.homepage    = 'https://github.com/startae/file_uploader'
+  s.homepage    = 'https://github.com/startae/uploadbox'
   s.summary     = 'Ajax file uploader for Rails applications.'
-  s.description = 'FileUploader makes easy to manage files in your Rails application.'
+  s.description = 'Uploadbox makes easy to manage files in your Rails application.'
 
   s.required_ruby_version = '>= 1.9.3'
 

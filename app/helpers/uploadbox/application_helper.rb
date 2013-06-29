@@ -1,4 +1,4 @@
-module FileUploader
+module Uploadbox
   module ApplicationHelper
   end
 end
