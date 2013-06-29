@@ -3,7 +3,7 @@ $:.push File.expand_path('../lib', __FILE__)
 require 'file_uploader/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'file_uploader'
+  s.name        = 'uploadbox'
   s.version     = FileUploader::VERSION
   s.authors     = ['Julio Protzek', 'Renato Carvalho']
   s.email       = ['julio@startae.com.br', 'renato@startae.com.br']
@@ -28,8 +28,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'mini_magick',            '~> 3.6.0'
   s.add_dependency 'jbuilder',               '~> 1.4.2'
 
-  s.add_development_dependency 'jquery-rails',           '~> 3.0.1'
-  s.add_development_dependency 'better_errors',          '~> 0.9.0'
-  s.add_development_dependency 'binding_of_caller',      '~> 0.7.2'
+  s.add_development_dependency 'jquery-rails',      '~> 3.0.1'
+  s.add_development_dependency 'better_errors',     '~> 0.9.0'
+  s.add_development_dependency 'binding_of_caller', '~> 0.7.2'
   s.add_development_dependency 'sqlite3'
 end
