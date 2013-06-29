@@ -10,6 +10,8 @@ require 'jbuilder'
 
 module FileUploader
   class Engine < ::Rails::Engine
+    config.autoload_paths << File.expand_path('../../../app/uploaders/concerns', __FILE__)
+    p config.autoload_paths
     isolate_namespace FileUploader
   end
 end
