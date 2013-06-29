@@ -1,3 +1,13 @@
+require 'slim'
+require 'sass-rails'
+require 'coffee-rails'
+require 'fog'
+require 'carrierwave'
+require 'carrierwave-processing'
+require 'mini_magick'
+require 'jbuilder'
+
+
 module FileUploader
   class Engine < ::Rails::Engine
     isolate_namespace FileUploader
