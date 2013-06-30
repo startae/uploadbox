@@ -6,8 +6,10 @@
 </p>
 
 <p>
-  <strong>Image:</strong>
-  <%= image_tag @post.image.file.regular.url, width: 50, height: 50 if @post.image? %>
+  <strong>Regular:</strong>
+  <%= image_tag @post.image.file.regular.url if @post.image? %>
+  <strong>Thumb:</strong>
+  <%= image_tag @post.image.file.thumb.url if @post.image? %>
 </p>
 
 <p>

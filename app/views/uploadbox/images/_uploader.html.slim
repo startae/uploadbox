@@ -2,13 +2,14 @@
   div data-component="ImageUploader"
     input name="image_id" data-item="id" type="hidden"
     .fileupload data-provides="fileupload" class="fileupload-#{resource.image? ? 'exists' : 'new'}"
-      .fileupload-preview.thumbnail style="width: 50px; height: 50px;"
-        = image_tag resource.image.file.regular, width: 50, height: 50 if resource.image?
+      .fileupload-preview.thumbnail style="width: #{resource.image.send(preview).width}px; height: #{resource.image.send(preview).height}px;"
+        = img resource.image.send(preview) if resource.image?
       div
         span.btn.btn-file
           span.fileupload-new Escolher imagem
           span.fileupload-exists Alterar
           input type="file" data-url="#{uploadbox.images_path}" name="image[file]"
+          input type="hidden" name="image[imageable_type]" value="#{resource.class}"
         - if resource.image?
           = link_to 'Excluir', uploadbox.image_path(resource.image), class: 'btn fileupload-exists', remote: true, method: :delete
         - else

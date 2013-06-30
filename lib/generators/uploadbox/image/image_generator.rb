@@ -4,16 +4,13 @@ module Uploadbox
 
     source_root File.expand_path('../templates', __FILE__)
 
-    def create_initializer
+    def create_initializers
       copy_file 'initializers/carrierwave.rb', 'config/initializers/carrierwave.rb'
+      copy_file 'initializers/uploadbox.rb', 'config/initializers/uploadbox.rb'
     end
 
     def update_gitignore
       append_to_file '.gitignore', 'public/uploads'
-    end
-
-    def create_uploader
-      copy_file 'uploaders/image_uploader.rb', 'app/uploaders/image_uploader.rb'
     end
 
     def create_model

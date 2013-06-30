@@ -2,11 +2,12 @@ class @ImageUploader
   constructor: (@container) ->
     @preview = @container.find('[data-provides="fileupload"]')
     @fileInput = @container.find('input[type="file"]')
+    @typeInput = @container.find('input[name="image[imageable_type]"]')
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
     @fileInput.fileupload
       dataType: 'json'
-      formData: {name: @fileInput.attr('name'), value: @fileInput.val()}
+      formData: [{name: @fileInput.attr('name'), value: @fileInput.val()}, {name: @typeInput.attr('name'), value: @typeInput.val()}]
       add: @add
       progress: @progress
       done: @done
