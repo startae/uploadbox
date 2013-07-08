@@ -1,6 +1,7 @@
 json.(@image, :id)
 json.versions do
-  json.original @image.file.url
-  json.regular @image.file.regular.url
+  @image.versions.keys.each do |version|
+    json.set! version, @image.send(version).url
+  end
 end
 json.url image_path(@image)

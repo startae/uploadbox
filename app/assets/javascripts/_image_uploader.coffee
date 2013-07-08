@@ -5,6 +5,7 @@ class @ImageUploader
     @typeInput = @container.find('input[name="image[imageable_type]"]')
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
+    @thumbContainer = @container.find('.fileupload-preview.thumbnail')
     @fileInput.fileupload
       dataType: 'json'
       formData: [{name: @fileInput.attr('name'), value: @fileInput.val()}, {name: @typeInput.attr('name'), value: @typeInput.val()}]
@@ -23,14 +24,15 @@ class @ImageUploader
 
   done: (e, data) =>
     image = data.result
+    console.log image.versions
     @loader.detach()
     @idInput.val(image.id)
     @container.find('a.btn.fileupload-exists').attr('href', image.url)
-    @container.find('.fileupload-preview.thumbnail img').detach()
+    @thumbContainer.find('img').detach()
     img = $('<img/>')
-    img.attr('src', image.versions.regular)
-    img.attr('width', 50)
-    img.attr('height', 50)
+    img.attr('src', image.versions[@thumbContainer.data('version')])
+    img.attr('width', @thumbContainer.data('width'))
+    img.attr('height', @thumbContainer.data('height'))
     @container.find('.fileupload-preview.thumbnail').append(img)
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
 

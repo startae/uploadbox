@@ -2,7 +2,7 @@
   div data-component="ImageUploader"
     input name="image_id" data-item="id" type="hidden"
     .fileupload data-provides="fileupload" class="fileupload-#{resource.image? ? 'exists' : 'new'}"
-      .fileupload-preview.thumbnail style="width: #{resource.image.send(preview).width}px; height: #{resource.image.send(preview).height}px;"
+      .fileupload-preview.thumbnail data-version="#{preview}" data-width="#{resource.class.versions[preview][0]}" data-height="#{resource.class.versions[preview][1]}" style="width: #{resource.class.versions[preview][0]}px; height: #{resource.class.versions[preview][1]}px;"
         = img resource.image.send(preview) if resource.image?
       div
         span.btn.btn-file
