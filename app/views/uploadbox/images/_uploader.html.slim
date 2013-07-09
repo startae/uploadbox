@@ -1,17 +1,18 @@
 = form.fields_for :image do
   div data-component="ImageUploader"
-    input name="image_id" data-item="id" type="hidden"
-    .fileupload data-provides="fileupload" class="fileupload-#{resource.image? ? 'exists' : 'new'}"
-      .fileupload-preview.thumbnail data-version="#{preview}" data-width="#{resource.class.versions[preview][0]}" data-height="#{resource.class.versions[preview][1]}" style="width: #{resource.class.versions[preview][0]}px; height: #{resource.class.versions[preview][1]}px;"
-        = img resource.image.send(preview) if resource.image?
+    input name="#{upload_name}_id" data-item="id" type="hidden"
+    .fileupload data-provides="fileupload" class="fileupload-#{resource.send(upload_name).present? ? 'exists' : 'new'}"
+      .fileupload-preview.thumbnail data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
+        = img resource.send(upload_name).send(version) if resource.send(upload_name).present?
       div
         span.btn.btn-file
-          span.fileupload-new Escolher imagem
+          span.fileupload-new Escolher
           span.fileupload-exists Alterar
           input type="file" data-url="#{uploadbox.images_path}" name="image[file]"
           input type="hidden" name="image[imageable_type]" value="#{resource.class}"
-        - if resource.image?
-          = link_to 'Excluir', uploadbox.image_path(resource.image), class: 'btn fileupload-exists', remote: true, method: :delete
+          input type="hidden" name="image[upload_name]" value="#{upload_name}"
+        - if resource.send(upload_name).present?
+          = link_to 'Excluir', uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
         - else
           = link_to 'Excluir', '#', class: 'btn fileupload-exists', remote: true, method: :delete
 

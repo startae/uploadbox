@@ -3,12 +3,17 @@ class @ImageUploader
     @preview = @container.find('[data-provides="fileupload"]')
     @fileInput = @container.find('input[type="file"]')
     @typeInput = @container.find('input[name="image[imageable_type]"]')
+    @uploadNameInput = @container.find('input[name="image[upload_name]"]')
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
     @thumbContainer = @container.find('.fileupload-preview.thumbnail')
     @fileInput.fileupload
       dataType: 'json'
-      formData: [{name: @fileInput.attr('name'), value: @fileInput.val()}, {name: @typeInput.attr('name'), value: @typeInput.val()}]
+      formData: [
+        {name: @fileInput.attr('name'), value: @fileInput.val()},
+        {name: @typeInput.attr('name'), value: @typeInput.val()}
+        {name: @uploadNameInput.attr('name'), value: @uploadNameInput.val()}
+      ]
       add: @add
       progress: @progress
       done: @done
@@ -24,7 +29,6 @@ class @ImageUploader
 
   done: (e, data) =>
     image = data.result
-    console.log image.versions
     @loader.detach()
     @idInput.val(image.id)
     @container.find('a.btn.fileupload-exists').attr('href', image.url)

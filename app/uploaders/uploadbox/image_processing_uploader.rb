@@ -8,7 +8,8 @@ module Uploadbox
     process :strip
 
     def store_dir
-      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      # "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      "uploads/image/#{mounted_as}/#{model.id}"
     end
 
     def extension_white_list
@@ -21,18 +22,6 @@ module Uploadbox
         name = File.basename(original_filename, extension).parameterize.dasherize
         "#{name}#{extension}"
       end
-    end
-
-    def dimensions
-      model.versions[version_name]
-    end
-
-    def width
-      dimensions[0]
-    end
-
-    def height
-      dimensions[1]
     end
   end
 end

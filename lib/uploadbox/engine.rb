@@ -19,12 +19,19 @@ module Uploadbox
 end
 
 class ActionView::Helpers::FormBuilder
-  def image_uploader(options={})
-    options.reverse_merge!(preview: @object.class.versions.keys.first)
-    @template.render partial: 'uploadbox/images/uploader', locals: {resource: @object, form: self, preview: options[:preview]}
+  def uploader(upload_name, options={})
+    upload_model_class = "Uploadbox::#{@object.class.to_s + upload_name.to_s.camelize}".constantize
+    options.reverse_merge!(preview: upload_model_class.versions.keys.first)
+    dimensions = upload_model_class.versions[options[:preview]]
+    @template.render partial: 'uploadbox/images/uploader', locals: {
+      upload_name: upload_name,
+      resource: @object,
+      form: self,
+      version: options[:preview],
+      width: dimensions[0],
+      height: dimensions[1]
+    }
   end
 end
-
-
 
 require 'uploadbox/image_uploader'

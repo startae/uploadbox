@@ -13,23 +13,17 @@ module Uploadbox
       append_to_file '.gitignore', 'public/uploads'
     end
 
-    def create_model
-      copy_file 'models/image.rb', 'app/models/image.rb'
-    end
-
     def create_migration
       migration_template 'migrate/create_images.rb', 'db/migrate/create_images.rb'
     end
 
-
     private
-
-    def self.next_migration_number(dirname)
-      if ActiveRecord::Base.timestamped_migrations
-        Time.now.utc.strftime('%Y%m%d%H%M%S')
-      else
-        '%.3d' % (current_migration_number(dirname) + 1)
+      def self.next_migration_number(dirname)
+        if ActiveRecord::Base.timestamped_migrations
+          Time.now.utc.strftime('%Y%m%d%H%M%S')
+        else
+          '%.3d' % (current_migration_number(dirname) + 1)
+        end
       end
-    end
   end
 end
