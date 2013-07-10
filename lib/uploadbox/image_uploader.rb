@@ -1,6 +1,15 @@
 module Uploadbox
   module ImageUploader
-    def uploads_one(upload_name, upload_versions={})
+    def uploads_one(upload_name, options={})
+      default_options = {
+        default: false,
+        retina: Uploadbox.retina,
+        quality: Uploadbox.retina ? (Uploadbox.retina_quality || 40) : (Uploadbox.image_quality || 80)
+      }
+      options = options.reverse_merge(default_options)
+      upload_versions = options.select{ |key| default_options.keys.exclude? key }
+      options = options.select{ |key| default_options.keys.include? key }
+
       imageable_type = self.to_s
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
@@ -38,16 +47,13 @@ module Uploadbox
         Uploadbox.const_set(self.class.to_s + upload_name.to_s.camelize + 'Uploader', dynamic_uploader)
         dynamic_uploader.class_eval do
           upload_versions.each do |version_name, dimensions|
-            if Uploadbox.retina
+            if options[:retina]
               dimensions = dimensions.map{ |d| d * 2 }
-              quality = Uploadbox.retina_quality || 30
-            else
-              quality = Uploadbox.image_quality || 70
             end
 
             version version_name do
               process resize_to_fill: dimensions
-              process quality: quality
+              process quality: quality = options[:quality]
             end
 
             def dimensions
