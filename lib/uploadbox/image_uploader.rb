@@ -3,6 +3,7 @@ module Uploadbox
     def uploads_one(upload_name, options={})
       default_options = {
         default: false,
+        removable: true,
         retina: Uploadbox.retina,
         quality: Uploadbox.retina ? (Uploadbox.retina_quality || 40) : (Uploadbox.image_quality || 80)
       }
@@ -34,6 +35,10 @@ module Uploadbox
       upload_class.class_eval <<-RUBY, __FILE__, __LINE__ + 1
         def self.versions
           #{upload_versions}
+        end
+
+        def self.removable?
+          #{options[:removable]}
         end
       RUBY
 

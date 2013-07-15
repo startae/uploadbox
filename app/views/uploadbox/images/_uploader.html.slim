@@ -4,18 +4,22 @@
       input name="[#{namespace}]#{upload_name}_id" data-item="id" type="hidden"
     - else
       input name="#{upload_name}_id" data-item="id" type="hidden"
-    .fileupload data-provides="fileupload" class="fileupload-#{resource.send(upload_name).present? ? 'exists' : 'new'}"
+    .fileupload data-provides="fileupload" class="fileupload-#{(resource.send(upload_name).present? or default) ? 'exists' : 'new'}"
       .fileupload-preview.thumbnail data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
-        = img resource.send(upload_name).send(version) if resource.send(upload_name).present?
+        - if resource.send(upload_name).present?
+          = img resource.send(upload_name).send(version)
+        - elsif default
+          = image_tag default, width: width, height: height
       div
         span.btn.btn-file
-          span.fileupload-new Escolher
-          span.fileupload-exists Alterar
+          span.fileupload-new = choose_label
+          span.fileupload-exists = update_label
           input type="file" data-url="#{uploadbox.images_path}" name="image[file]"
           input type="hidden" name="image[imageable_type]" value="#{resource.class}"
           input type="hidden" name="image[upload_name]" value="#{upload_name}"
-        - if resource.send(upload_name).present?
-          = link_to 'Excluir', uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
-        - else
-          = link_to 'Excluir', '#', class: 'btn fileupload-exists', remote: true, method: :delete
+        - if removable
+          - if resource.send(upload_name).present?
+            = link_to destroy_label, uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
+          - else
+            = link_to destroy_label, '#', class: 'btn fileupload-exists', remote: true, method: :delete
 
