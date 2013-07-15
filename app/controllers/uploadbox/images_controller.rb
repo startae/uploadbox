@@ -1,5 +1,7 @@
 module Uploadbox
   class ImagesController < ApplicationController
+    layout false
+
     def create
       @image = Image.create_upload(image_params)
     end
