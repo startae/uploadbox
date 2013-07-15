@@ -21,7 +21,7 @@ end
 class ActionView::Helpers::FormBuilder
   def uploader(upload_name, options={})
     upload_model_class = "Uploadbox::#{@object.class.to_s + upload_name.to_s.camelize}".constantize
-    options.reverse_merge!(preview: upload_model_class.versions.keys.first)
+    options.reverse_merge!(preview: upload_model_class.versions.keys.first, namespace: false)
     dimensions = upload_model_class.versions[options[:preview]]
     @template.render partial: 'uploadbox/images/uploader', locals: {
       upload_name: upload_name,
@@ -29,7 +29,8 @@ class ActionView::Helpers::FormBuilder
       form: self,
       version: options[:preview],
       width: dimensions[0],
-      height: dimensions[1]
+      height: dimensions[1],
+      namespace: options[:namespace]
     }
   end
 end
