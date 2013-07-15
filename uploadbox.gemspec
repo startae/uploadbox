@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'rails',                  '~> 4.0.0'
-  s.add_dependency 'slim',                   '~> 1.3.8'
+  s.add_dependency 'slim',                   '~> 2.0.0'
   s.add_dependency 'sass-rails',             '~> 4.0.0'
   s.add_dependency 'coffee-rails',           '~> 4.0.0'
   s.add_dependency 'fog',                    '~> 1.12.1'
