@@ -10,7 +10,7 @@
           = img resource.send(upload_name).send(version)
         - elsif default
           = image_tag default, width: width, height: height
-      div
+      .fileupload-actions
         span.btn.btn-file
           span.fileupload-new = choose_label
           span.fileupload-exists = update_label
