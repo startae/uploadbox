@@ -16,31 +16,45 @@ module Uploadbox
       upload_class = Class.new(Image)
       Uploadbox.const_set(upload_class_name, upload_class)
 
-      # picture?
+      # @post.picture?
       define_method("#{upload_name}?") { send(upload_name) and send(upload_name).file? }
 
-      # attach_picture
+      # @post.attach_picture
       define_method("attach_#{upload_name}") do |upload_id|
         if upload_id.present?
           self.send("attach_#{upload_name}!", upload_id)
         end
       end
 
-      # attach_picture!
+      # @post.attach_picture!
       define_method("attach_#{upload_name}!") do |upload_id|
         self.send("#{upload_name}=", upload_class.find(upload_id))
       end
 
-      # Uploadbox::PostPicture < Image
-      upload_class.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-        def self.versions
-          #{upload_versions}
-        end
+      # Post.update_picture_versions!
+      self.define_singleton_method "update_#{upload_name}_versions!" do
+        Uploadbox.const_get(upload_class_name).find_each{|upload| upload.file.recreate_versions!}
+      end
 
-        def self.removable?
-          #{options[:removable]}
-        end
-      RUBY
+      # Uploadbox::PostPicture < Image
+      upload_class.define_singleton_method :versions do
+        upload_versions
+      end
+
+      upload_class.define_singleton_method :removable? do
+        options[:removable]
+      end
+
+      # Uploadbox::PostPicture < Image
+      # upload_class.class_eval <<-RUBY, __FILE__, __LINE__ + 1
+      #   def self.versions
+      #     #{upload_versions}
+      #   end
+
+      #   def self.removable?
+      #     #{options[:removable]}
+      #   end
+      # RUBY
 
       upload_class.instance_eval do
         delegate *upload_versions.keys, to: :file
