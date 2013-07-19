@@ -11,12 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130624130939) do
+ActiveRecord::Schema.define(version: 20130718140602) do
 
   create_table "images", force: true do |t|
     t.string   "file"
     t.integer  "imageable_id"
     t.string   "imageable_type"
+    t.integer  "width"
+    t.integer  "height"
+    t.boolean  "retina",         default: false
+    t.string   "upload_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

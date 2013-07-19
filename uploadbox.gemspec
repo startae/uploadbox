@@ -15,8 +15,7 @@ Gem::Specification.new do |s|
 
   s.license = 'MIT'
 
-  s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
-  s.test_files = Dir['test/**/*']
+  s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   s.add_dependency 'rails',                  '~> 4.0.0'
   s.add_dependency 'slim',                   '~> 2.0.0'
@@ -28,8 +27,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'mini_magick',            '~> 3.6.0'
   s.add_dependency 'jbuilder',               '~> 1.4.2'
 
-  s.add_development_dependency 'jquery-rails',      '~> 3.0.1'
-  s.add_development_dependency 'better_errors',     '~> 0.9.0'
-  s.add_development_dependency 'binding_of_caller', '~> 0.7.2'
-  s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'jquery-rails',       '~> 3.0.1'
+  s.add_development_dependency 'better_errors',      '~> 0.9.0'
+  s.add_development_dependency 'binding_of_caller',  '~> 0.7.2'
+  s.add_development_dependency 'sqlite3',            '~> 1.3.7'
+  s.add_development_dependency 'rspec-rails',        '~> 2.14.0'
+  s.add_development_dependency 'capybara',           '~> 2.1.0'
+  s.add_development_dependency 'factory_girl_rails', '~> 4.2.1'
 end

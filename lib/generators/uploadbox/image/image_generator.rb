@@ -10,6 +10,8 @@ module Uploadbox
     end
 
     def update_gitignore
+      return unless File.exist?('.gitignore')
+
       append_to_file '.gitignore', 'public/uploads'
     end
 
