@@ -7,9 +7,9 @@
 
 <p>
   <strong>Regular:</strong>
-  <%= image_tag @post.image.file.regular.url if @post.image? %>
+  <%= img @post.picture.regular if @post.picture? %>
   <strong>Thumb:</strong>
-  <%= image_tag @post.image.file.thumb.url if @post.image? %>
+  <%= img @post.picture.thumb if @post.picture? %>
 </p>
 
 <p>
