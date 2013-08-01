@@ -6,10 +6,6 @@ module Uploadbox
       @image = Image.create_upload(image_params)
     end
 
-    def update
-      @image = Image.create_upload(image_params)
-    end
-
     def destroy
       render json: Image.find(params[:id]).destroy
     end
