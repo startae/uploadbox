@@ -19,16 +19,16 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'rails',                  '~> 4.0.0'
-  s.add_dependency 'slim',                   '~> 2.0.0'
+  s.add_dependency 'slim',                   '~> 2.0.1'
   s.add_dependency 'sass-rails',             '~> 4.0.0'
   s.add_dependency 'coffee-rails',           '~> 4.0.0'
   s.add_dependency 'fog',                    '~> 1.12.1'
-  s.add_dependency 'carrierwave',            '~> 0.8.0'
+  s.add_dependency 'carrierwave',            '~> 0.9.0'
   s.add_dependency 'carrierwave-processing', '~> 0.0.2'
   s.add_dependency 'mini_magick',            '~> 3.6.0'
-  s.add_dependency 'jbuilder',               '~> 1.4.2'
+  s.add_dependency 'jbuilder',               '~> 1.5.0'
 
-  s.add_development_dependency 'jquery-rails',      '~> 3.0.1'
+  s.add_development_dependency 'jquery-rails',      '~> 3.0.4'
   s.add_development_dependency 'better_errors',     '~> 0.9.0'
   s.add_development_dependency 'binding_of_caller', '~> 0.7.2'
   s.add_development_dependency 'sqlite3'
