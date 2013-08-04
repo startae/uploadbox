@@ -16,7 +16,7 @@
     <% @posts.each do |post| %>
       <tr>
 
-        <td><%= image_tag post.image.file.regular, width: 50, height: 50 if post.image? %></td>
+        <td><%= img post.picture.thumb if post.picture? %></td>
         <td><%= post.title %></td>
         <td><%= post.body %></td>
         <td><%= link_to 'Show', post %></td>
