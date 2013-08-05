@@ -3,10 +3,14 @@
 ## Installation
 
 Add to Gemfile
-`gem 'uploadbox'`
+```
+gem 'uploadbox'
+```
 
 Run generators
-`rails g uploadbox:image`
+```
+rails g uploadbox:image
+```
 
 Add jquery and uploadbox to `application.js`
 ```
@@ -23,20 +27,42 @@ Add uploadbox to `application.css`
 ```
 
 Migrate database
-`rake db:migrate`
+```
+rake db:migrate
+```
 
 Update `routes.rb`
-`mount Uploadbox::Engine => '/uploadbox', as: :uploadbox`
+```
+mount Uploadbox::Engine => '/uploadbox', as: :uploadbox
+```
 
 ## Usage
 Add `uploads_one` to your model
-`uploads_one :picture, thumb: [100, 100], regular: [300, 200]`
+```
+class Post < ActiveRecord::Base
+  uploads_one :picture, thumb: [100, 100], regular: [600, 300]
+end
+```
 
 Add field to form
-`<%= f.uploader :picture %>`
+```
+<%= f.uploader :picture %>
+```
 
 Attach upload on controller
-`@post.attach_picture(params[:picture_id])`
+```
+@post.attach_picture(params[:picture_id])
+```
 
 Show image
-`<%= img @post.picture.regular if @post.picture? %>`
+```
+<%= img @post.picture.regular if @post.picture? %>
+```
+
+## Recreate versions
+You might come to a situation where you want to retroactively change a version or add a new one. You can use the `update_#{upload_name}_versions!` method to recreate the versions from the base file.
+For a post with a picture:
+
+```
+Post.update_picture_versions!
+```
