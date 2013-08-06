@@ -26,6 +26,12 @@ module Uploadbox
         end
       end
 
+      # @post.remote_picture_url=('http://exemple.com/image.jpg')
+      define_method("remote_#{upload_name}_url=") do |url|
+        upload = Uploadbox.const_get(upload_class_name).create!(remote_file_url: url)
+        self.send("#{upload_name}=", upload)
+      end
+
       # @post.attach_picture!
       define_method("attach_#{upload_name}!") do |upload_id|
         self.send("#{upload_name}=", upload_class.find(upload_id))

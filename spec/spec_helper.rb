@@ -6,6 +6,8 @@ require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'database_cleaner'
 require 'capybara/poltergeist'
+require 'sham_rack'
+
 Capybara.javascript_driver = :poltergeist
 
 Rails.backtrace_cleaner.remove_silencers!
