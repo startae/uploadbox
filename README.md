@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/startae/uploadbox.png)](https://codeclimate.com/github/startae/uploadbox)
+
 # Do not use (not yet released)
 
 ## Installation
