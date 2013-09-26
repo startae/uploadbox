@@ -3,7 +3,11 @@ module Uploadbox
     layout false
 
     def create
-      @image = Image.create_upload(image_params)
+      Resque.enqueue(ProcessImage, image_params)
+      # @image = Image.create_upload(image_params)
+      p '*' * 100
+      p 'Resque.enqueue'
+      render nothing: true
     end
 
     def destroy
@@ -12,7 +16,7 @@ module Uploadbox
 
     private
       def image_params
-        params.require(:image).permit(:file, :imageable_type, :upload_name)
+        params.require(:image).permit(:remote_file_url, :imageable_type, :upload_name)
       end
   end
 end

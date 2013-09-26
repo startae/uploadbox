@@ -6,6 +6,7 @@ require 'carrierwave'
 require 'carrierwave-processing'
 require 'mini_magick'
 require 'jbuilder'
+require 'resque'
 
 module Uploadbox
   class Engine < ::Rails::Engine
