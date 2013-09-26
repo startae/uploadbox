@@ -1,5 +1,5 @@
 = form.fields_for :image do
-  div data-component="ImageUploader"
+  .uploadbox-image-uploader data-component="ImageUploader"
     - if namespace
       input name="[#{namespace}]#{upload_name}_id" data-item="id" type="hidden"
     - else
