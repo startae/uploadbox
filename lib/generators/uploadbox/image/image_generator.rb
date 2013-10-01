@@ -11,7 +11,7 @@ module Uploadbox
     def update_gitignore
       return unless File.exist?('.gitignore')
 
-      append_to_file '.gitignore', 'public/uploads'
+      append_to_file '.gitignore', "\npublic/uploads"
     end
 
     def create_migration

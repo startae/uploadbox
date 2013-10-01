@@ -1,4 +1,5 @@
 = form.fields_for :image do
+  - secure_random = SecureRandom.uuid
   div data-component="ImageUploader"
     - if namespace
       input name="[#{namespace}]#{upload_name}_id" data-item="id" type="hidden"
@@ -10,19 +11,19 @@
           = img resource.send(upload_name).send(version)
         - elsif default
           = image_tag default, width: width, height: height
+
       .fileupload-actions
         span.btn.btn-file
           span.fileupload-new = choose_label
           span.fileupload-exists = update_label
-          input type="hidden" name="key"
+    
+          input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/" data-secure-random="#{secure_random}"
+          input type="hidden" name="policy" value="#{policy}"
+          input type="hidden" name="signature" value="#{signature}"
           input type="hidden" name="AWSAccessKeyId" value="#{ENV['S3_KEY']}"
           input type="hidden" name="acl" value="public-read"
-          input type="hidden" name="policy"
-          input type="hidden" name="signature"
-          input type="hidden" name="success_action_status" value="201"
-          input type="hidden" name="success_action_redirect"
+          input type="hidden" name="key" value="uploads/#{secure_random}/"
 
-          input type="file" data-callback-url="#{uploadbox.images_path}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com" name="image[file]"
           input type="hidden" name="image[imageable_type]" value="#{resource.class}"
           input type="hidden" name="image[upload_name]" value="#{upload_name}"
         - if removable

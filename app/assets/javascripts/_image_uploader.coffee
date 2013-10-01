@@ -7,8 +7,11 @@ class @ImageUploader
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
     @thumbContainer = @container.find('.fileupload-preview.thumbnail')
+
     @fileInput.fileupload
       type: 'POST'
+      dataType: 'xml'
+      replaceFileInput: false
       autoUpload: true
       formData: @getFormData
       add: @add
@@ -16,65 +19,66 @@ class @ImageUploader
       done: @done
 
   add: (e, data) =>
-    $.ajax
-      url: '/uploadbox/s3/signed_url'
-      type: 'GET'
-      dataType: 'json'
-      data:
-        doc:
-          title: data.files[0].name
-      async: false
-      success: @signUrlSuccess
-
     @loader = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>').hide()
     @preview.prepend(@loader.fadeIn())
     data.submit()
 
-  getFormData: =>
+  getFormData: (arg) =>
+    file = @fileInput.get(0).files[0]
+    @filePath = @container.find('input[name="key"]').val() + file.name
     [
-      {name: @container.find('input[name="key"]').attr('name'), value: @container.find('input[name="key"]').val()},
-      {name: @container.find('input[name="AWSAccessKeyId"]').attr('name'), value: @container.find('input[name="AWSAccessKeyId"]').val()},
-      {name: @container.find('input[name="acl"]').attr('name'), value: @container.find('input[name="acl"]').val()},
-      {name: @container.find('input[name="policy"]').attr('name'), value: @container.find('input[name="policy"]').val()},
-      {name: @container.find('input[name="signature"]').attr('name'), value: @container.find('input[name="signature"]').val()},
-      {name: @container.find('input[name="success_action_status"]').attr('name'), value: @container.find('input[name="success_action_status"]').val()}
-      {name: 'file', value: @fileInput.val()}
+      { name: 'key', value: @filePath },
+      { name: 'acl', value: @container.find('input[name="acl"]').val()  },
+      { name: 'Content-Type', value: file.type },
+      { name: 'AWSAccessKeyId', value: @container.find('input[name="AWSAccessKeyId"]').val() },
+      { name: 'policy', value: @container.find('input[name="policy"]').val() },
+      { name: 'signature', value: @container.find('input[name="signature"]').val() },
+      { name: "file", value: file }
     ]
-
-  signUrlSuccess: (data) =>
-    @container.find('input[name="key"]').val(data.key)
-    @container.find('input[name="policy"]').val(data.policy)
-    @container.find('input[name="signature"]').val(data.signature)
 
   progress: (e, data) =>
     progress = parseInt(data.loaded / data.total * 100, 10)
     @loader.find('.bar').css({width: progress + '%'})
 
   done: (e, data) =>
-    console.log @fileInput
     $.ajax
       type: 'POST'
       url: @fileInput.data('callback-url')
       data: 
-        'image[remote_file_url]': $(data.result).find('Location').text()
+        'image[remote_file_url]': @fileInput.data('url') + @filePath
         'image[imageable_type]': @typeInput.val()
         'image[upload_name]': @uploadNameInput.val()
+        'image[secure_random]': @fileInput.data('secure-random')
+      complete: =>
+        @verifyProcessingInterval = setInterval(@verifyProcessing, 3000)
 
+  verifyProcessing: =>
+    arr = @filePath.split('/')
+    filename = arr[arr.length - 1]
+    $.ajax
+      type: 'GET'
+      dataType: 'json'
+      url: @fileInput.data('find-url')
+      data:
+        'name': filename
+        'imageable_type': @typeInput.val()
+        'upload_name': @uploadNameInput.val()
+        'secure_random': @fileInput.data('secure-random')
+
+      complete: (data) =>
+        if data.responseJSON.hasOwnProperty('id')
+          clearInterval(@verifyProcessingInterval)
+          @showThumb(data.responseJSON)
+        
   delete: =>
     @idInput.val('')
     @container.find('.fileupload-preview.thumbnail img').detach()
     @container.find('.fileupload').addClass('fileupload-new').removeClass('fileupload-exists')
 
-  success: (data) =>
-    # Here we get the file url on s3 in an xml doc
-    url = $(data).find('Location').text()
-    # $('#real_file_url').val(url) # Update the real input in the other form
-
   fail: (e, data) =>
     console.log('fail')
 
-  showThumb: (data) =>
-    image = data.result
+  showThumb: (image) =>
     @loader.detach()
     @idInput.val(image.id)
     @container.find('a.btn.fileupload-exists').attr('href', image.url)
@@ -82,12 +86,11 @@ class @ImageUploader
     img = $('<img/>')
     img.attr('src', image.versions[@thumbContainer.data('version')])
     img.attr('width', @thumbContainer.data('width'))
-    img.attr('height', @thumbContainer.data('height'))
-    @container.find('.fileupload-preview.thumbnail').append(img)
+    img.attr('height', @thumbContainer.data('height')).hide()
+    @container.find('.fileupload-preview.thumbnail').append(img.fadeIn())
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
 
 
 $ ->
   $('[data-component="ImageUploader"]').each (i, el) ->
     $(el).data('image_uploader', new ImageUploader($(el)))
-
