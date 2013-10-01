@@ -1,4 +1,6 @@
 class ProcessImage
+  extend HerokuResqueAutoScale
+  
   @queue = :process_image
 
   def self.perform(image_params)

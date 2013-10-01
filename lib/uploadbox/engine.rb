@@ -7,6 +7,7 @@ require 'carrierwave-processing'
 require 'mini_magick'
 require 'jbuilder'
 require 'resque'
+require 'heroku_resque_auto_scale'
 
 module Uploadbox
   class Engine < ::Rails::Engine

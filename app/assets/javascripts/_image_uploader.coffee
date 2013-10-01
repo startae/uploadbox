@@ -50,7 +50,7 @@ class @ImageUploader
         'image[upload_name]': @uploadNameInput.val()
         'image[secure_random]': @fileInput.data('secure-random')
       complete: =>
-        @verifyProcessingInterval = setInterval(@verifyProcessing, 3000)
+        @verifyProcessingInterval = setInterval(@verifyProcessing, 5000)
 
   verifyProcessing: =>
     arr = @filePath.split('/')
