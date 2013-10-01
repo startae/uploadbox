@@ -5,14 +5,13 @@ module Uploadbox
     source_root File.expand_path('../templates', __FILE__)
 
     def create_initializers
-      copy_file 'initializers/carrierwave.rb', 'config/initializers/carrierwave.rb'
       copy_file 'initializers/uploadbox.rb', 'config/initializers/uploadbox.rb'
     end
 
     def update_gitignore
       return unless File.exist?('.gitignore')
 
-      append_to_file '.gitignore', 'public/uploads'
+      append_to_file '.gitignore', "\npublic/uploads"
     end
 
     def create_migration

@@ -51,17 +51,6 @@ module Uploadbox
         options[:removable]
       end
 
-      # Uploadbox::PostPicture < Image
-      # upload_class.class_eval <<-RUBY, __FILE__, __LINE__ + 1
-      #   def self.versions
-      #     #{upload_versions}
-      #   end
-
-      #   def self.removable?
-      #     #{options[:removable]}
-      #   end
-      # RUBY
-
       upload_class.instance_eval do
         delegate *upload_versions.keys, to: :file
 

@@ -7,6 +7,7 @@ class CreateImages < ActiveRecord::Migration
       t.integer :height
       t.boolean :retina, default: false
       t.string :upload_name
+      t.string :secure_random
 
       t.timestamps
     end
