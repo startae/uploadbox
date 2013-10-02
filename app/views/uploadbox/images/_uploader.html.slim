@@ -18,8 +18,8 @@
           span.fileupload-exists = update_label
     
           input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/" data-secure-random="#{secure_random}"
-          input type="hidden" name="policy" value="#{policy}"
-          input type="hidden" name="signature" value="#{signature}"
+          input type="hidden" name="policy" value="#{s3_policy}"
+          input type="hidden" name="signature" value="#{s3_signature}"
           input type="hidden" name="AWSAccessKeyId" value="#{ENV['S3_KEY']}"
           input type="hidden" name="acl" value="public-read"
           input type="hidden" name="key" value="uploads/#{secure_random}/"
