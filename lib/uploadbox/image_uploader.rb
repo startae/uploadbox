@@ -58,7 +58,7 @@ module Uploadbox
 
         # Uploabox::PostPictureUploader < UploadBox::ImgProcessing < CarrierWave
         dynamic_uploader = Class.new(Uploadbox::ImageProcessingUploader)
-        Uploadbox.const_set(self.class.to_s + upload_name.to_s.camelize + 'Uploader', dynamic_uploader)
+        Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
         dynamic_uploader.class_eval do
           upload_versions.each do |version_name, dimensions|
             if options[:retina]

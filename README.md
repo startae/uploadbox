@@ -33,9 +33,14 @@ Migrate database
 rake db:migrate
 ```
 
-Update `routes.rb`
+Create a bucket on S3 (US region)
+
+Set environmet variables
 ```
-mount Uploadbox::Engine => '/uploadbox', as: :uploadbox
+S3_KEY=AAAA123BBBB
+S3_SECRET=abc123ABcEffgee122
+S3_REGION=sa-east-1
+S3_BUCKET=uploads
 ```
 
 ## Usage
@@ -67,4 +72,17 @@ For a post with a picture:
 
 ```
 Post.update_picture_versions!
+```
+
+
+## Heroku
+Set environmet variables
+```
+HEROKU_API_KEY=ab12acvc12
+HEROKU_APP=your-app-name
+```
+
+Add Redis to Go addon
+```
+heroku addons:add redistogo:nano
 ```

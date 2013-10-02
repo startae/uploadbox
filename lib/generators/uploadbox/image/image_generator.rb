@@ -14,6 +14,14 @@ module Uploadbox
       append_to_file '.gitignore', "\npublic/uploads"
     end
 
+    def copy_procfile
+      copy_file 'Procfile', 'Procfile'
+    end
+
+    def add_route
+      route "mount Uploadbox::Engine => '/uploadbox', as: :uploadbox"
+    end
+
     def create_migration
       migration_template 'migrate/create_images.rb', 'db/migrate/create_images.rb'
     end
