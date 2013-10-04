@@ -3,7 +3,11 @@ module Uploadbox
     layout false
 
     def create
-      Resque.enqueue(ProcessImage, image_params)
+      if Uploadbox.background_processing
+        Resque.enqueue(ProcessImage, image_params)
+      else
+        Image.create_upload(image_params)
+      end
       render nothing: true
     end
 
@@ -11,7 +15,7 @@ module Uploadbox
       params[:imageable_type].constantize # load class
 
       upload_class_name = params[:imageable_type] + params[:upload_name].camelize
-      @image = Uploadbox.const_get(upload_class_name).find_by(secure_random: params[:secure_random], file: params[:name])
+      @image = Uploadbox.const_get(upload_class_name).find_by(secure_random: params[:secure_random])
     end
 
     def destroy

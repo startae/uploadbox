@@ -1,7 +1,7 @@
 class CreateImages < ActiveRecord::Migration
   def change
     create_table :images do |t|
-      t.string :file, index: true
+      t.string :file
       t.references :imageable, polymorphic: true, index: true
       t.integer :width
       t.integer :height
