@@ -84,5 +84,5 @@ HEROKU_APP=your-app-name
 
 Add Redis to Go addon
 ```
-heroku addons:add redistogo:nano
+heroku addons:add rediscloud:20
 ```
