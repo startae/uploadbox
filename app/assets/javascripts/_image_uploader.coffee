@@ -7,6 +7,8 @@ class @ImageUploader
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
     @thumbContainer = @container.find('.fileupload-preview.thumbnail')
+    
+    @fileInput.show()
 
     @fileInput.fileupload
       type: 'POST'
@@ -14,17 +16,28 @@ class @ImageUploader
       replaceFileInput: false
       autoUpload: true
       formData: @getFormData
+      dropZone: @container
+      pasteZone: @container
       add: @add
       progress: @progress
       done: @done
 
   add: (e, data) =>
-    @loader = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>').hide()
-    @preview.prepend(@loader.fadeIn())
-    data.submit()
+    @file = data.files[0]
+
+    if @loader
+      @loader.detach()
+    
+    if @verifyProcessingInterval
+      clearInterval(@verifyProcessingInterval)
+
+    if @file.type.match /gif|jpe?g|png/
+      @loader = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>').hide()
+      @preview.prepend(@loader.fadeIn())
+      data.submit()
 
   getFormData: (arg) =>
-    file = @fileInput.get(0).files[0]
+    file = @file
     @filePath = @container.find('input[name="key"]').val() + file.name
     [
       { name: 'key', value: @filePath },
