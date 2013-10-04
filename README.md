@@ -33,14 +33,27 @@ Migrate database
 rake db:migrate
 ```
 
-Create a bucket on S3 (US region)
+Create a development bucket on S3 (US region)
 
 Set environmet variables
 ```
 S3_KEY=AAAA123BBBB
 S3_SECRET=abc123ABcEffgee122
-S3_REGION=sa-east-1
-S3_BUCKET=uploads
+S3_REGION=us-east-1
+S3_BUCKET=uploads-development
+```
+
+Edit CORS config for the bucket
+```
+<CORSConfiguration>
+  <CORSRule>
+    <AllowedOrigin>http://localhost</AllowedOrigin>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedHeader>*</AllowedHeader>
+  </CORSRule>
+</CORSConfiguration>
 ```
 
 ## Usage
@@ -76,13 +89,32 @@ Post.update_picture_versions!
 
 
 ## Heroku
-Set environmet variables
+Create a production bucket on S3 (US region)
+Don't use your development bucket
 ```
-HEROKU_API_KEY=ab12acvc12
-HEROKU_APP=your-app-name
+<CORSConfiguration>
+  <CORSRule>
+    <AllowedOrigin>http://yourdomain.com</AllowedOrigin>
+    <AllowedMethod>GET</AllowedMethod>
+    <AllowedMethod>POST</AllowedMethod>
+    <AllowedMethod>PUT</AllowedMethod>
+    <AllowedHeader>*</AllowedHeader>
+  </CORSRule>
+</CORSConfiguration>
 ```
 
-Add Redis to Go addon
+Set environmet variables
+```
+heroku config:add
+HEROKU_API_KEY=ab12acvc12 \
+HEROKU_APP=your-app-name \
+S3_KEY=AAAA123BBBB \
+S3_SECRET=abc123ABcEffgee122 \
+S3_REGION=us-east-1 \
+S3_BUCKET=uploads-production \
+```
+
+Add Redis
 ```
 heroku addons:add rediscloud:20
 ```
