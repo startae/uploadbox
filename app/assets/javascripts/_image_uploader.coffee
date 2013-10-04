@@ -35,6 +35,8 @@ class @ImageUploader
       @loader = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>').hide()
       @preview.prepend(@loader.fadeIn())
       data.submit()
+      @container.find('.fileupload').removeClass('processing').addClass('uploading')
+      @container.closest('form').find('[type=submit]').attr("disabled", true)
 
   getFormData: (arg) =>
     file = @file
@@ -54,6 +56,7 @@ class @ImageUploader
     @loader.find('.bar').css({width: progress + '%'})
 
   done: (e, data) =>
+    @container.find('.fileupload').removeClass('uploading').addClass('processing')
     $.ajax
       type: 'POST'
       url: @fileInput.data('callback-url')
@@ -62,8 +65,13 @@ class @ImageUploader
         'image[imageable_type]': @typeInput.val()
         'image[upload_name]': @uploadNameInput.val()
         'image[secure_random]': @fileInput.data('secure-random')
+      
       complete: =>
         @verifyProcessingInterval = setInterval(@verifyProcessing, 5000)
+      
+      error: =>
+        @loader.detach()
+        @container.find('.fileupload').removeClass('uploading').removeClass('processing')
 
   verifyProcessing: =>
     arr = @filePath.split('/')
@@ -82,14 +90,20 @@ class @ImageUploader
         if data.responseJSON.hasOwnProperty('id')
           clearInterval(@verifyProcessingInterval)
           @showThumb(data.responseJSON)
-        
+      
+      error: =>
+        @loader.detach()
+        @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+
+
   delete: =>
     @idInput.val('')
     @container.find('.fileupload-preview.thumbnail img').detach()
     @container.find('.fileupload').addClass('fileupload-new').removeClass('fileupload-exists')
 
   fail: (e, data) =>
-    console.log('fail')
+    @loader.detach()
+    @container.find('.fileupload').removeClass('uploading').removeClass('processing')
 
   showThumb: (image) =>
     @loader.detach()
@@ -102,7 +116,8 @@ class @ImageUploader
     img.attr('height', @thumbContainer.data('height')).hide()
     @container.find('.fileupload-preview.thumbnail').append(img.fadeIn())
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
-
+    @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+    @container.closest('form').find('[type=submit]').attr("disabled", false)
 
 $ ->
   $('[data-component="ImageUploader"]').each (i, el) ->

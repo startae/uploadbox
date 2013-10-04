@@ -33,7 +33,7 @@ Migrate database
 rake db:migrate
 ```
 
-Create a development bucket on S3 (US region)
+Create a development bucket on S3
 
 Set environmet variables
 ```
@@ -47,7 +47,7 @@ Edit CORS config for the bucket
 ```
 <CORSConfiguration>
   <CORSRule>
-    <AllowedOrigin>http://localhost</AllowedOrigin>
+    <AllowedOrigin>http://localhost:5000</AllowedOrigin>
     <AllowedMethod>GET</AllowedMethod>
     <AllowedMethod>POST</AllowedMethod>
     <AllowedMethod>PUT</AllowedMethod>
@@ -89,7 +89,7 @@ Post.update_picture_versions!
 
 
 ## Heroku
-Create a production bucket on S3 (US region)
+Create a production bucket on S3
 Don't use your development bucket
 ```
 <CORSConfiguration>
