@@ -72,6 +72,7 @@ class @ImageUploader
       error: =>
         @loader.detach()
         @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+        @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   verifyProcessing: =>
     arr = @filePath.split('/')
@@ -94,6 +95,7 @@ class @ImageUploader
       error: =>
         @loader.detach()
         @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+        @container.closest('form').find('[type=submit]').attr("disabled", false)
 
 
   delete: =>
@@ -104,6 +106,7 @@ class @ImageUploader
   fail: (e, data) =>
     @loader.detach()
     @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+    @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   showThumb: (image) =>
     @loader.detach()
