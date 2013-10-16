@@ -35,7 +35,7 @@ class ActionView::Helpers::FormBuilder
                            default: false,
                            update_label: 'Alterar',
                            choose_label: 'Escolher',
-                           destroy_label: 'Excluir')
+                           destroy_label: '&times;'.html_safe)
     dimensions = upload_model_class.versions[options[:preview]]
     @template.render partial: 'uploadbox/images/uploader', locals: {
       upload_name: upload_name,

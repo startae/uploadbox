@@ -1,11 +1,65 @@
 @import bootstrap/progress
+@import fontello
 
 .uploadbox-image-uploader
+  position: relative
+  padding-bottom: 30px
+
   .btn
     background-color: #f7f7f7
-    padding: 10px
     text-align: center
     text-decoration: none
+    box-sizing: border-box
+    border: 1px solid #f7f7f7
+  &:hover
+    .btn
+      border: 1px solid darken(#f7f7f7, 20%)
+
+    .icon-picture-1
+      opacity: .5
+
+  .fileupload-exists
+    .icon-picture-1
+      display: none
+
+  .icon-picture-1
+    position: absolute
+    top: 0
+    left: 0
+    font-size: 40px
+    width: 100%
+    height: 100%
+    opacity: .3
+
+
+  .fileupload
+    &:before
+      box-sizing: border-box
+      z-index: 5
+      font-size: 10px
+      line-height: 12px
+      display: block
+      text-align: center
+      font-weight: 500
+      color: #fff
+      background-color: rgba(#000, .6)
+      padding: 2px
+      position: absolute
+      width: 100%
+      top: 10px
+
+    &.uploading:before
+      content: 'Enviando...'
+
+    &.processing:before
+      content: 'Processando... Quase lá.'
+
+
+  .fileupload-new .btn.fileupload-exists
+    display: none
+
+  .fileupload-new .btn-file
+    background: #f7f7f7
 
   .clearfix
     *zoom: 1
@@ -37,6 +91,7 @@
     position: relative
     vertical-align: middle
     display: block
+    background: transparent
     > input
       position: absolute
       top: 0
@@ -49,6 +104,9 @@
       direction: ltr
       cursor: pointer
       width: 100%
+
+    .fileupload-exists, .fileupload-new
+      margin-left: -9999px
 
   .fileupload
     position: relative
@@ -65,7 +123,7 @@
       vertical-align: middle
       text-align: center
       > img
-        display: inline-block
+        display: block
         vertical-align: middle
         max-height: 100%
     .btn
@@ -82,7 +140,6 @@
 
   .thumbnail-borderless .thumbnail
     border: none
-    padding: 0
     border-radius: 0
     box-shadow: none
 
@@ -127,9 +184,36 @@
     right: 0
 
   .fileupload-actions
-    position: relative
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
 
   .progress
-    height: 14px
+    height: 10px
+    width: 100%
     margin-bottom: 0
     border-radius: 0
+    position: absolute
+    z-index: 5
+    top: 0
+    left: 0
+
+  .btn.fileupload-exists
+    position: absolute
+    top: -10px
+    right: -10px
+    z-index: 3
+    padding: 0
+    border-radius: 100%
+    width: 20px
+    height: 20px
+    line-height: 20px
+    font-size: 16px
+    background: lighten(black, 20%)
+    color: darken(white, 20%)
+    display: block
+    border: 0
+    &:hover
+      background: black
+      color: white

@@ -1,6 +1,6 @@
 = form.fields_for :image do
   - secure_random = SecureRandom.uuid
-  .uploadbox-image-uploader data-component="ImageUploader"
+  .uploadbox-image-uploader data-component="ImageUploader" style="width: #{width}px; height: #{height}px;"
     - if namespace
       input name="[#{namespace}]#{upload_name}_id" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
     - else
@@ -13,11 +13,11 @@
           = image_tag default, width: width, height: height
 
       .fileupload-actions
-        span.btn.btn-file
+        span.btn.btn-file style="width: #{width}px; height: #{height}px;"
           span.fileupload-new = choose_label
           span.fileupload-exists = update_label
-    
-          input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/" data-secure-random="#{secure_random}" accept="image/x-png, image/gif, image/jpeg" style="display: none"
+          i.icon-picture-1 style="line-height: #{height}px"
+          input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/" data-secure-random="#{secure_random}" accept="image/x-png, image/gif, image/jpeg" style="display: none; width: #{width}px; height: #{height}px;"
           input type="hidden" name="policy" value="#{s3_policy}"
           input type="hidden" name="signature" value="#{s3_signature}"
           input type="hidden" name="AWSAccessKeyId" value="#{ENV['S3_KEY']}"
