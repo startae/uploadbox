@@ -3,6 +3,7 @@ module Uploadbox
     def uploads_one(upload_name, options={})
       default_options = {
         default: false,
+        placeholder: false,
         removable: true,
         retina: Uploadbox.retina,
         quality: Uploadbox.retina ? (Uploadbox.retina_quality || 40) : (Uploadbox.image_quality || 80)
@@ -17,7 +18,35 @@ module Uploadbox
       Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.picture?
-      define_method("#{upload_name}?") { send(upload_name) and send(upload_name).file? }
+      define_method("#{upload_name}?") do 
+        upload = send("#{upload_name}_upload")
+        upload and upload.file?
+      end
+
+      define_method(upload_name) do
+        upload = send("#{upload_name}_upload")
+
+        if upload
+          upload
+        else
+          image = Struct.new(:url, :width, :height) do
+            def to_s
+              url
+            end
+          end
+
+          placeholder = Class.new do
+            upload_versions.keys.each do |version|
+              define_method(version) do
+                width = upload_versions[version][0]
+                height = upload_versions[version][1]
+                image.new("#{version}_#{options[:placeholder]}", width, height)
+              end
+            end
+          end
+          placeholder.new
+        end
+      end
 
       # @post.attach_picture
       define_method("attach_#{upload_name}") do |upload_id|
@@ -86,7 +115,7 @@ module Uploadbox
         mount_uploader :file, dynamic_uploader
       end
 
-      has_one upload_name, as: :imageable, dependent: :destroy, class_name: "Uploadbox::#{self.to_s + upload_name.to_s.camelize}"
+      has_one "#{upload_name}_upload".to_sym, as: :imageable, dependent: :destroy, class_name: "Uploadbox::#{self.to_s + upload_name.to_s.camelize}"
     end
 
   end

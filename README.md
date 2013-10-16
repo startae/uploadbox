@@ -60,9 +60,12 @@ Edit CORS config for the bucket
 Add `uploads_one` to your model
 ```
 class Post < ActiveRecord::Base
-  uploads_one :picture, thumb: [100, 100], regular: [600, 300]
+  uploads_one :picture, thumb: [100, 100], regular: [600, 300], placeholder: 'default.png'
 end
 ```
+
+If `placeholder` is set posts without uploads will render the placeholder.
+Empty `@post.picture.thumb` will render `app/assets/images/thumb_default.png`
 
 Add field to form
 ```

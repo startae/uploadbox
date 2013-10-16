@@ -4,12 +4,11 @@
   <strong>Title:</strong>
   <%= @post.title %>
 </p>
-
 <p>
   <strong>Regular:</strong>
-  <%= img @post.picture.regular if @post.picture? %>
+  <%= img @post.picture.regular, alt: 'Lorem ipsum' %>
   <strong>Thumb:</strong>
-  <%= img @post.picture.thumb if @post.picture? %>
+  <%= img @post.picture.thumb %>
 </p>
 
 <p>

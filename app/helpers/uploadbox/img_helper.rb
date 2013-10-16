@@ -15,12 +15,11 @@ module Uploadbox
       ).gsub("\n", "")
     end
 
-    def img(*args)
-      upload = args[0]
-      if upload.is_a? CarrierWave::Uploader::Base
-        image_tag(upload.url, width: upload.width, height: upload.height)
+    def img(source, options={})
+      if source.respond_to?(:url) and source.respond_to?(:width) and source.respond_to?(:height)
+        image_tag(source.url, {width: source.width, height: source.height}.merge(options))
       else
-        image_tag(*args)
+        image_tag(source, options)
       end
     end
 
