@@ -6,14 +6,14 @@ describe Uploadbox::ImagesController do
 
   describe 'create' do
     it 'creates image' do
-      post :create, image: {upload_name: 'picture', file: picture_file, imageable_type: 'Post'}, format: :json
+      post :create, image: {'upload_name' => 'picture', 'file' => picture_file, 'imageable_type' => 'Post'}, format: :json
       Image.count.should == 1
       Uploadbox::PostPicture.count.should == 1
     end
   end
 
   describe 'destroy' do
-    let!(:picture) { Image.create_upload(upload_name: 'picture', file: picture_file, imageable_type: 'Post') }
+    let!(:picture) { Image.create_upload('upload_name' => 'picture', 'file' => picture_file, 'imageable_type' => 'Post') }
 
     it 'destroys image' do
       delete :destroy, id: picture.id, format: :json

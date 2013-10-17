@@ -11,7 +11,7 @@ describe 'Image Upload' do
   end
 
   let(:picture_file) { File.open('spec/support/images/picture.jpg') }
-  let(:picture) { Image.create_upload(upload_name: 'picture', file: picture_file, imageable_type: 'Post') }
+  let(:picture) { Image.create_upload('upload_name' => 'picture', 'file' => picture_file, 'imageable_type' => 'Post') }
   let(:post) { Post.create(title: 'Lorem') }
 
   it 'attach upload by id' do

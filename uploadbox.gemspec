@@ -42,4 +42,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sham_rack',          '~> 1.3.6'
   s.add_development_dependency 'simplecov',          '~> 0.7.1'
   s.add_development_dependency 'pry-rails',          '~> 0.3.2'
+  s.add_development_dependency 'dotenv-rails'
+  s.add_development_dependency 'launchy'
 end

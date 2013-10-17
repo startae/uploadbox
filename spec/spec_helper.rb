@@ -10,8 +10,12 @@ require 'factory_girl_rails'
 require 'database_cleaner'
 require 'capybara/poltergeist'
 require 'sham_rack'
+require 'pry'
+require 'dotenv'
+Dotenv.load Rails.root.join('.env')
 
 Capybara.javascript_driver = :poltergeist
+Capybara.default_wait_time = 20
 
 Rails.backtrace_cleaner.remove_silencers!
 
