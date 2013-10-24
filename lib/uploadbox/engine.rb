@@ -28,7 +28,7 @@ module Uploadbox
 end
 
 class ActionView::Helpers::FormBuilder
-  def uploader(upload_name, options={})
+  def uploads_one(upload_name, options={})
     upload_model_class = "Uploadbox::#{@object.class.to_s + upload_name.to_s.camelize}".constantize
     options.reverse_merge!(preview: upload_model_class.versions.keys.first,
                            namespace: false,
@@ -37,7 +37,32 @@ class ActionView::Helpers::FormBuilder
                            choose_label: 'Escolher',
                            destroy_label: '&times;'.html_safe)
     dimensions = upload_model_class.versions[options[:preview]]
-    @template.render partial: 'uploadbox/images/uploader', locals: {
+    @template.render partial: 'uploadbox/images/uploads_one', locals: {
+      upload_name: upload_name,
+      resource: @object,
+      form: self,
+      version: options[:preview],
+      width: dimensions[0],
+      height: dimensions[1],
+      namespace: options[:namespace],
+      default: options[:default],
+      removable: upload_model_class.removable?,
+      update_label: options[:update_label],
+      choose_label: options[:choose_label],
+      destroy_label: options[:destroy_label]
+    }
+  end
+
+  def uploads_many(upload_name, options={})
+    upload_model_class = "Uploadbox::#{@object.class.to_s + upload_name.to_s.camelize}".constantize
+    options.reverse_merge!(preview: upload_model_class.versions.keys.first,
+                           namespace: false,
+                           default: false,
+                           update_label: 'Alterar',
+                           choose_label: 'Escolher',
+                           destroy_label: '&times;'.html_safe)
+    dimensions = upload_model_class.versions[options[:preview]]
+    @template.render partial: 'uploadbox/images/uploads_many', locals: {
       upload_name: upload_name,
       resource: @object,
       form: self,

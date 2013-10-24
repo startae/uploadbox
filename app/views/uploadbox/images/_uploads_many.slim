@@ -1,0 +1,61 @@
+= form.fields_for :image do
+  div data-component="GalleryUploader"
+    .uploadbox-image-uploader.uploads-many data-container="uploader" style="width: #{width}px; height: #{height}px;"
+      - if namespace
+        input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}[]" data-item="id" type="hidden"
+      - else
+        input name="[#{resource.class.name.underscore}]#{upload_name}[]" data-item="id" type="hidden"
+
+      .fileupload data-provides="fileupload" class="fileupload-new"
+        .fileupload-preview.thumbnail data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
+
+        .fileupload-actions
+          span.btn.btn-file style="width: #{width}px; height: #{height}px;"
+            span.fileupload-new = choose_label
+            span.fileupload-exists = update_label
+            i.icon.icon-plus-1 style="line-height: #{height}px; font-size: #{(width * 0.4).to_i}px"
+
+            input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/" accept="image/png image/x-png, image/gif, image/jpeg" style="display: none; width: #{width}px; height: #{height}px;" multiple="true"
+            input type="hidden" name="policy" value="#{s3_policy}"
+            input type="hidden" name="signature" value="#{s3_signature}"
+            input type="hidden" name="AWSAccessKeyId" value="#{ENV['S3_KEY']}"
+            input type="hidden" name="acl" value="public-read"
+            input type="hidden" name="key"
+
+            input type="hidden" name="image[imageable_type]" value="#{resource.class}"
+            input type="hidden" name="image[upload_name]" value="#{upload_name}"
+          - if removable
+            - if resource.send(upload_name).present?
+              = link_to destroy_label, uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
+            - else
+              = link_to destroy_label, '#', class: 'btn fileupload-exists', remote: true, method: :delete
+
+    - for image in resource.send(upload_name)
+      .uploadbox-image-uploader.uploads-many data-component="UploaderPreview" data-container="uploader" style="width: #{width}px; height: #{height}px;"
+        - if namespace
+          input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}[]" data-item="id" type="hidden" value="#{image.id}"
+        - else
+          input name="[#{resource.class.name.underscore}]#{upload_name}[]" data-item="id" type="hidden" value="#{image.id}"
+
+        .fileupload data-provides="fileupload" class="fileupload-exists"
+          .fileupload-preview.thumbnail data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
+            = img image.send(version)
+
+          .fileupload-actions
+            span.btn.btn-file style="width: #{width}px; height: #{height}px;"
+              span.fileupload-new = choose_label
+              span.fileupload-exists = update_label
+              i.icon.icon-plus-1 style="line-height: #{height}px; font-size: #{(width * 0.4).to_i}px"
+
+              input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{ENV['S3_BUCKET']}.s3.amazonaws.com/" accept="image/png image/x-png, image/gif, image/jpeg" style="display: none; width: #{width}px; height: #{height}px;" multiple="true"
+              input type="hidden" name="policy" value="#{s3_policy}"
+              input type="hidden" name="signature" value="#{s3_signature}"
+              input type="hidden" name="AWSAccessKeyId" value="#{ENV['S3_KEY']}"
+              input type="hidden" name="acl" value="public-read"
+              input type="hidden" name="key"
+
+              input type="hidden" name="image[imageable_type]" value="#{resource.class}"
+              input type="hidden" name="image[upload_name]" value="#{upload_name}"
+            - if removable
+              = link_to destroy_label, uploadbox.image_path(image), class: 'btn fileupload-exists', remote: true, method: :delete
+

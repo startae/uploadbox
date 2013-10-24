@@ -8,7 +8,14 @@
           li = msg
 
   .field
-    = f.uploader :picture
+    = f.label 'Foto'
+    = f.uploads_one :picture
+
+  hr
+  p = @post.images.size
+  .field
+    = f.label 'Galeria'
+    = f.uploads_many :images
 
   .field
     = f.label :title
@@ -22,5 +29,4 @@
 
   .actions
     = f.submit
-
 

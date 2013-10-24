@@ -2,5 +2,9 @@
 #= require jquery.iframe-transport
 #= require cors/jquery.postmessage-transport
 #= require cors/jquery.xdr-transport
+#= require _uuid
 #= require jquery.fileupload
 #= require _image_uploader
+#= require _uploader_preview
+#= require _gallery_uploader
+#= require _manager

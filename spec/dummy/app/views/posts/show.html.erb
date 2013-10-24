@@ -4,6 +4,7 @@
   <strong>Title:</strong>
   <%= @post.title %>
 </p>
+
 <p>
   <strong>Regular:</strong>
   <%= img @post.picture.regular, alt: 'Lorem ipsum' %>
@@ -14,6 +15,13 @@
 <p>
   <strong>Body:</strong>
   <%= @post.body %>
+</p>
+
+<p>
+  <strong>Gallery:</strong>
+  <% for image in @post.images %>
+    <%= img image.thumb %>
+  <% end %>
 </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |

@@ -22,7 +22,6 @@ class PostsController < ApplicationController
   # POST /posts
   def create
     @post = Post.new(post_params)
-    @post.attach_picture(params[:picture_id])
 
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
@@ -33,8 +32,6 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
-    @post.attach_picture(params[:picture_id])
-
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
@@ -56,6 +53,6 @@ class PostsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def post_params
-      params.require(:post).permit(:title, :body)
+      params.require(:post).permit(:title, :body, :picture, images: [])
     end
 end
