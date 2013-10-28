@@ -51,7 +51,9 @@ module Uploadbox
 
       # @post.picture=(id)
       define_method("#{upload_name}=") do |upload_id|
-        self.send("#{upload_name}_upload=", upload_class.find(upload_id))
+        if upload_id.present?
+          self.send("#{upload_name}_upload=", upload_class.find(upload_id))
+        end
       end
 
       # @post.remote_picture_url=('http://exemple.com/image.jpg')
