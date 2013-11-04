@@ -7,9 +7,10 @@ class @Manager
 
     for className in classNames
       try
-        instance = new (eval(className))(container)
         instanceName = Manager.getInstanceName(className)
-        container.data(instanceName, instance)
+        unless container.data(instanceName)
+          instance = new (eval(className))(container)
+          container.data(instanceName, instance)
       catch error
         try
           console.warn "#{className} component not found"
