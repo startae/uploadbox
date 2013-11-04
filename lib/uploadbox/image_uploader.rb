@@ -15,7 +15,10 @@ module Uploadbox
       imageable_type = self.to_s
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
-      Uploadbox.const_set(upload_class_name, upload_class)
+      
+      unless Uploadbox.const_defined?(upload_class_name)
+        Uploadbox.const_set(upload_class_name, upload_class)
+      end
 
       # @post.picture?
       define_method("#{upload_name}?") do 
@@ -83,7 +86,9 @@ module Uploadbox
 
         # Uploabox::PostPictureUploader < UploadBox::ImgProcessing < CarrierWave
         dynamic_uploader = Class.new(Uploadbox::ImageProcessingUploader)
-        Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
+        unless Uplaodbox.const_defined?(self.name.demodulize + 'Uploader')
+          Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
+        end
         dynamic_uploader.class_eval do
           upload_versions.each do |version_name, dimensions|
             if options[:retina]
@@ -134,7 +139,10 @@ module Uploadbox
       imageable_type = self.to_s
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
-      Uploadbox.const_set(upload_class_name, upload_class)
+      
+      unless Uploadbox.const_defined?(upload_class_name)
+        Uploadbox.const_set(upload_class_name, upload_class)
+      end
 
       # @post.images?
       define_method("#{upload_name}?") do 
@@ -171,7 +179,9 @@ module Uploadbox
 
         # Uploabox::PostPictureUploader < UploadBox::ImgProcessing < CarrierWave
         dynamic_uploader = Class.new(Uploadbox::ImageProcessingUploader)
-        Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
+        Uploadbox.const_defined?(self.name.demodulize + 'Uploader')
+          Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
+        end
         dynamic_uploader.class_eval do
           upload_versions.each do |version_name, dimensions|
             if options[:retina]
