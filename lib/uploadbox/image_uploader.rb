@@ -179,7 +179,7 @@ module Uploadbox
 
         # Uploabox::PostPictureUploader < UploadBox::ImgProcessing < CarrierWave
         dynamic_uploader = Class.new(Uploadbox::ImageProcessingUploader)
-        Uploadbox.const_defined?(self.name.demodulize + 'Uploader')
+        unless Uploadbox.const_defined?(self.name.demodulize + 'Uploader')
           Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
         end
         dynamic_uploader.class_eval do
