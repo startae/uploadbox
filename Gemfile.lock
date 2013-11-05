@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uploadbox (0.0.19)
+    uploadbox (0.0.20)
       carrierwave (~> 0.9.0)
       carrierwave-processing (~> 0.0.2)
       coffee-rails (~> 4.0.0)

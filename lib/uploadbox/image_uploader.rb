@@ -16,9 +16,9 @@ module Uploadbox
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
       
-      unless Uploadbox.const_defined?(upload_class_name)
-        Uploadbox.const_set(upload_class_name, upload_class)
-      end
+      return if Uploadbox.const_defined?(upload_class_name)
+
+      Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.picture?
       define_method("#{upload_name}?") do 
@@ -86,6 +86,7 @@ module Uploadbox
 
         # Uploabox::PostPictureUploader < UploadBox::ImgProcessing < CarrierWave
         dynamic_uploader = Class.new(Uploadbox::ImageProcessingUploader)
+
         unless Uploadbox.const_defined?(self.name.demodulize + 'Uploader')
           Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
         end
@@ -140,9 +141,9 @@ module Uploadbox
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
       
-      unless Uploadbox.const_defined?(upload_class_name)
-        Uploadbox.const_set(upload_class_name, upload_class)
-      end
+      return if Uploadbox.const_defined?(upload_class_name)
+
+      Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.images?
       define_method("#{upload_name}?") do 
