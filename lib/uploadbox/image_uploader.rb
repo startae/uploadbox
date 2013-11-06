@@ -15,9 +15,8 @@ module Uploadbox
       imageable_type = self.to_s
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
-      
-      return if Uploadbox.const_defined?(upload_class_name)
 
+      Uploadbox.instance_eval {remove_const upload_class_name} if Uploadbox.const_defined?(upload_class_name)
       Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.picture?
@@ -141,8 +140,7 @@ module Uploadbox
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
       
-      return if Uploadbox.const_defined?(upload_class_name)
-
+      Uploadbox.instance_eval {remove_const upload_class_name} if Uploadbox.const_defined?(upload_class_name)
       Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.images?
