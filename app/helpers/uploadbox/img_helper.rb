@@ -9,7 +9,7 @@ module Uploadbox
       Base64.encode64(
         OpenSSL::HMAC.digest(
           OpenSSL::Digest::Digest.new('sha1'),
-          ENV['S3_SECRET'],
+          CarrierWave::Uploader::Base.fog_credentials[:aws_access_key_id],
           s3_policy
         )
       ).gsub("\n", "")
@@ -31,7 +31,7 @@ module Uploadbox
             ["starts-with", "$key", 'uploads/'],
             ["content-length-range", 0, 500.megabytes],
             ["starts-with","$content-type",""],
-            {bucket: ENV['S3_BUCKET']},
+            {bucket: CarrierWave::Uploader::Base.fog_directory},
             {acl: 'public-read'}
           ]
         }
