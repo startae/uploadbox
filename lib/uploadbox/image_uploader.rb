@@ -20,7 +20,7 @@ module Uploadbox
       Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.picture?
-      define_method("#{upload_name}?") do 
+      define_method("#{upload_name}?") do
         upload = send("#{upload_name}_upload")
         upload and upload.file?
       end
@@ -117,8 +117,8 @@ module Uploadbox
 
       end
 
-      has_one "#{upload_name}_upload".to_sym, as: :imageable, 
-                                              class_name: "Uploadbox::#{self.to_s + upload_name.to_s.camelize}", 
+      has_one "#{upload_name}_upload".to_sym, as: :imageable,
+                                              class_name: "Uploadbox::#{self.to_s + upload_name.to_s.camelize}",
                                               autosave: true
       accepts_nested_attributes_for "#{upload_name}_upload".to_sym
     end
@@ -139,12 +139,12 @@ module Uploadbox
       imageable_type = self.to_s
       upload_class_name = imageable_type + upload_name.to_s.camelize
       upload_class = Class.new(Image)
-      
+
       Uploadbox.instance_eval {remove_const upload_class_name} if Uploadbox.const_defined?(upload_class_name)
       Uploadbox.const_set(upload_class_name, upload_class)
 
       # @post.images?
-      define_method("#{upload_name}?") do 
+      define_method("#{upload_name}?") do
         upload = send(upload_name)
         upload and upload.any?
       end
@@ -155,6 +155,19 @@ module Uploadbox
         for id in ids.select(&:present?)
           self.send(upload_name).send('<<', upload_class.find(id))
         end
+      end
+
+      # @post.picture=(id)
+      define_method("#{upload_name}=") do |upload_id|
+        if upload_id.present?
+          self.send("#{upload_name}_upload=", upload_class.find(upload_id))
+        end
+      end
+
+      # @post.add_remote_image_url('http://exemple.com/image.jpg')
+      define_method("add_remote_#{upload_name.to_s.singularize}_url") do |url|
+        upload = upload_class.create!(remote_file_url: url)
+        self.send(upload_name).send('<<', upload)
       end
 
       # Post.update_images_versions!
