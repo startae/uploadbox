@@ -7,7 +7,7 @@ class @ImageUploader
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
     @thumbContainer = @container.find('.fileupload-preview.thumbnail')
-    
+
     @fileInput.show()
 
     @fileInput.fileupload
@@ -27,7 +27,7 @@ class @ImageUploader
 
     if @loader
       @loader.detach()
-    
+
     if @verifyProcessingInterval
       clearInterval(@verifyProcessingInterval)
 
@@ -60,15 +60,15 @@ class @ImageUploader
     $.ajax
       type: 'POST'
       url: @fileInput.data('callback-url')
-      data: 
+      data:
         'image[remote_file_url]': @fileInput.data('url') + @filePath
         'image[imageable_type]': @typeInput.val()
         'image[upload_name]': @uploadNameInput.val()
         'image[secure_random]': @fileInput.data('secure-random')
-      
+
       complete: =>
         @verifyProcessingInterval = setInterval(@verifyProcessing, 5000)
-      
+
       error: =>
         @loader.detach()
         @container.find('.fileupload').removeClass('uploading').removeClass('processing')
@@ -91,7 +91,7 @@ class @ImageUploader
         if data.responseJSON.hasOwnProperty('id')
           clearInterval(@verifyProcessingInterval)
           @showThumb(data.responseJSON)
-      
+
       error: =>
         @loader.detach()
         @container.find('.fileupload').removeClass('uploading').removeClass('processing')

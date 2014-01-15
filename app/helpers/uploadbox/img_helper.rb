@@ -9,7 +9,7 @@ module Uploadbox
       Base64.encode64(
         OpenSSL::HMAC.digest(
           OpenSSL::Digest::Digest.new('sha1'),
-          CarrierWave::Uploader::Base.fog_credentials[:aws_access_key_id],
+          CarrierWave::Uploader::Base.fog_credentials[:aws_secret_access_key],
           s3_policy
         )
       ).gsub("\n", "")
