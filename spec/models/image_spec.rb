@@ -14,12 +14,12 @@ describe 'Image Upload' do
   let(:picture) { Image.create_upload('upload_name' => 'picture', 'file' => picture_file, 'imageable_type' => 'Post') }
   let(:post) { Post.create(title: 'Lorem') }
 
-  it 'attach upload by id' do
-    post.attach_picture(picture.id)
+  it 'adds attribute to model' do
+    post.update(picture: picture)
     Post.first.picture.should == picture
   end
 
-  describe '#remote_image_url' do
+  describe '#remote_picture_url=' do
     it 'create upload' do
       post = Post.new
       post.remote_picture_url = 'http://www.example.com/picture.jpg'
