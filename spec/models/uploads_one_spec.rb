@@ -35,8 +35,9 @@ describe '.uploads_one :picture' do
   describe '#remote_picture_url=("http://exemple.com/picture.jpg")' do
     it 'creates upload' do
       post = Post.new
+      post.picture?.should eql false
       post.remote_picture_url = 'http://www.example.com/picture.jpg'
-      post.picture.regular.url.should be_a String
+      post.picture?.should == true
     end
   end
 end
