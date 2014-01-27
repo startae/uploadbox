@@ -22,7 +22,7 @@ module Uploadbox
       # @post.picture?
       define_method("#{upload_name}?") do
         upload = send("#{upload_name}_upload")
-        upload and upload.file?
+        !!(upload and upload.file?)
       end
 
       # @post.picture
