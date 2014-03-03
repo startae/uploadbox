@@ -6,12 +6,12 @@ That said, it's already being used on production projects.
 
 ## Installation
 
+Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
+
 Add to Gemfile
 ```
 gem 'uploadbox', '0.0.26'
 ```
-
-Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
 
 Run generators
 ```
