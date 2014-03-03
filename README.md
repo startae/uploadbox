@@ -1,4 +1,5 @@
 # Uploadbox
+Easy uploads for Rails application
 
 ## Early Beta
 This is still an early beta version and will change a lot until it reaches API stability.
