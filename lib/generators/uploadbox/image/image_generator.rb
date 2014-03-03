@@ -8,6 +8,15 @@ module Uploadbox
       copy_file 'initializers/uploadbox.rb', 'config/initializers/uploadbox.rb'
     end
 
+    def copy_dotenv
+      if File.exist?('.env')
+        append_to_file '.env', "\n"
+        append_to_file '.env', File.open(File.expand_path('../templates/.env', __FILE__)).read
+      else
+        copy_file '.env', '.env'
+      end
+    end
+
     def add_route
       route "mount Uploadbox::Engine => '/uploadbox', as: :uploadbox"
     end
