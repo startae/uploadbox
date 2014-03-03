@@ -11,6 +11,8 @@ Add to Gemfile
 gem 'uploadbox'
 ```
 
+Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
+
 Run generators
 ```
 rails g uploadbox:image
