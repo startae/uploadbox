@@ -52,15 +52,7 @@ Edit CORS config for the bucket
 </CORSConfiguration>
 ```
 
-Set the environmet variables.
-Get S3 Key an Secret from Amazon S3 Credentials.
-You can use something like [dotenv](https://github.com/bkeepers/dotenv) and add this to your .env file:
-```
-S3_KEY=AAAA123BBBB
-S3_SECRET=abc123ABcEffgee122
-S3_BUCKET=uploads-development
-```
-
+Get S3 Key an Secret from Amazon S3 Credentials and update your .env file
 
 ## Usage
 Add `uploads_one` to your model
