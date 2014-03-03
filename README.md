@@ -54,8 +54,8 @@ Edit CORS config for the bucket
 
 Set the environmet variables.
 Get S3 Key an Secret from Amazon S3 Credentials.
-Region codes can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)
-You can use something like [dotenv](https://github.com/bkeepers/dotenv) and add this to your .env file.
+Region codes can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region).
+You can use something like [dotenv](https://github.com/bkeepers/dotenv) and add this to your .env file:
 ```
 S3_KEY=AAAA123BBBB
 S3_SECRET=abc123ABcEffgee122
@@ -77,12 +77,14 @@ Empty `@post.picture.thumb` will render `app/assets/images/thumb_default.png`
 
 Add field to form
 ```
-<%= f.uploader :picture %>
+<%= f.uploads_one :picture %>
 ```
 
-Attach upload on controller
+Allow picture attribute on controller
 ```
-@post.attach_picture(params[:picture_id])
+def post_params
+  params.require(:post).permit(:title, :body, :picture)
+end
 ```
 
 Show image
