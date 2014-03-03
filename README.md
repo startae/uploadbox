@@ -18,6 +18,11 @@ Run generators
 rails g uploadbox:image
 ```
 
+Migrate database
+```
+rake db:migrate
+```
+
 Add jquery and uploadbox to `application.js`
 ```
 //= require jquery
@@ -32,12 +37,7 @@ Add uploadbox to `application.css`
  */
 ```
 
-Migrate database
-```
-rake db:migrate
-```
-
-Create a development bucket on S3
+Create a development bucket on [Amazon S3](http://aws.amazon.com/s3/)
 
 Set environmet variables
 ```
