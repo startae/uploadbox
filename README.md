@@ -1,11 +1,11 @@
 # Uploadbox
 Easy uploads for Rails application
+[![Code Climate](https://codeclimate.com/github/startae/uploadbox.png)](https://codeclimate.com/github/startae/uploadbox)
 
 ## Early Beta
 This is still an early beta version and will change a lot until it reaches API stability.
 That said, it's already being used on production projects.
 
-[![Code Climate](https://codeclimate.com/github/startae/uploadbox.png)](https://codeclimate.com/github/startae/uploadbox)
 
 ## Installation
 
