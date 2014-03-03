@@ -39,19 +39,11 @@ Add uploadbox to `application.css`
 
 Create a development bucket on [Amazon S3](http://aws.amazon.com/s3/)
 
-Set environmet variables
-```
-S3_KEY=AAAA123BBBB
-S3_SECRET=abc123ABcEffgee122
-S3_REGION=us-east-1
-S3_BUCKET=uploads-development
-```
-
 Edit CORS config for the bucket
 ```
 <CORSConfiguration>
   <CORSRule>
-    <AllowedOrigin>http://localhost:5000</AllowedOrigin>
+    <AllowedOrigin>http://localhost:3000</AllowedOrigin>
     <AllowedMethod>GET</AllowedMethod>
     <AllowedMethod>POST</AllowedMethod>
     <AllowedMethod>PUT</AllowedMethod>
@@ -59,6 +51,16 @@ Edit CORS config for the bucket
   </CORSRule>
 </CORSConfiguration>
 ```
+
+Set environmet variables
+You can use something like [dotenv](https://github.com/bkeepers/dotenv) and add this to your .env file.
+```
+S3_KEY=AAAA123BBBB
+S3_SECRET=abc123ABcEffgee122
+S3_REGION=us-east-1
+S3_BUCKET=uploads-development
+```
+
 
 ## Usage
 Add `uploads_one` to your model
