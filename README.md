@@ -8,7 +8,7 @@ That said, it's already being used on production projects.
 
 Add to Gemfile
 ```
-gem 'uploadbox'
+gem 'uploadbox', '0.0.26'
 ```
 
 Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
