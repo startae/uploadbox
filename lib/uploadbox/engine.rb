@@ -8,6 +8,7 @@ require 'mini_magick'
 require 'jbuilder'
 require 'resque'
 require 'heroku_resque_auto_scale'
+require 'dotenv-rails'
 
 module Uploadbox
   class Engine < ::Rails::Engine

@@ -11,3 +11,4 @@ spec/dummy/.env
 coverage/*
 tmp
 .DS_Store
+*.gem
