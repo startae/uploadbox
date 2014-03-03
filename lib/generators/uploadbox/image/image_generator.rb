@@ -8,16 +8,6 @@ module Uploadbox
       copy_file 'initializers/uploadbox.rb', 'config/initializers/uploadbox.rb'
     end
 
-    def update_gitignore
-      return unless File.exist?('.gitignore')
-
-      append_to_file '.gitignore', "\npublic/uploads"
-    end
-
-    def copy_procfile
-      copy_file 'Procfile', 'Procfile'
-    end
-
     def add_route
       route "mount Uploadbox::Engine => '/uploadbox', as: :uploadbox"
     end

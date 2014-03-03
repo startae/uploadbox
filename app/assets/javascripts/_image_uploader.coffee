@@ -6,15 +6,13 @@ class @ImageUploader
     @uploadNameInput = @container.find('input[name="image[upload_name]"]')
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
-    @thumbContainer = @container.find('.fileupload-preview.thumbnail')
+    @thumbContainer = @container.find('.fileupload-preview.preview')
 
     @fileInput.show()
 
     @fileInput.fileupload
       type: 'POST'
       dataType: 'xml'
-      replaceFileInput: false
-      autoUpload: true
       formData: @getFormData
       dropZone: @container
       pasteZone: @container
@@ -100,7 +98,7 @@ class @ImageUploader
 
   delete: =>
     @idInput.val('')
-    @container.find('.fileupload-preview.thumbnail img').detach()
+    @container.find('.fileupload-preview.preview img').detach()
     @container.find('.fileupload').addClass('fileupload-new').removeClass('fileupload-exists')
 
   fail: (e, data) =>
@@ -109,6 +107,7 @@ class @ImageUploader
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   showThumb: (image) =>
+    console.log 'showThumb'
     @loader.detach()
     @idInput.val(image.id)
     @container.find('a.btn.fileupload-exists').attr('href', image.url)
@@ -117,11 +116,7 @@ class @ImageUploader
     img.attr('src', image.versions[@thumbContainer.data('version')])
     img.attr('width', @thumbContainer.data('width'))
     img.attr('height', @thumbContainer.data('height')).hide()
-    @container.find('.fileupload-preview.thumbnail').append(img.fadeIn())
+    @container.find('.fileupload-preview.preview').append(img.fadeIn())
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
     @container.find('.fileupload').removeClass('uploading').removeClass('processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)
-
-$ ->
-  $('[data-component="ImageUploader"]').each (i, el) ->
-    $(el).data('image_uploader', new ImageUploader($(el)))

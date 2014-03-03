@@ -7,7 +7,7 @@
       input name="[#{resource.class.name.underscore}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
 
     .fileupload data-provides="fileupload" class="fileupload-#{(resource.send("#{upload_name}?") or default) ? 'exists' : 'new'}"
-      .fileupload-preview.thumbnail data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
+      .fileupload-preview.preview data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
         - if resource.send("#{upload_name}?")
           = img resource.send(upload_name).send(version)
         - elsif default
@@ -19,7 +19,7 @@
           span.fileupload-exists = update_label
 
 
-          input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/" data-secure-random="#{secure_random}" accept="image/png image/x-png, image/gif, image/jpeg" style="display: none; width: #{width}px; height: #{height}px;"
+          input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/" data-secure-random="#{secure_random}" accept="image/*" style="display: none; width: #{width}px; height: #{height}px;"
           input type="hidden" name="policy" value="#{s3_policy}"
           input type="hidden" name="signature" value="#{s3_signature}"
           input type="hidden" name="AWSAccessKeyId" value="#{CarrierWave::Uploader::Base.fog_credentials[:aws_access_key_id]}"

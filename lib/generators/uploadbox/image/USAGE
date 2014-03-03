@@ -1,8 +1,10 @@
 Description:
-    Explain the generator
+    Installs uploadbox on your project
 
 Example:
-    rails generate image Thing
+    rails generate uploadbox:image
 
     This will create:
-        what/will/it/create
+        config/initializers/uploadbox.rb
+        db/migrate/create_images.rb
+        And will update your routes.rb

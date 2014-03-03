@@ -10,7 +10,7 @@ Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
 
 Add to Gemfile
 ```
-gem 'uploadbox', '0.0.26'
+gem 'uploadbox', '0.1.0'
 ```
 
 Run generators
@@ -54,12 +54,10 @@ Edit CORS config for the bucket
 
 Set the environmet variables.
 Get S3 Key an Secret from Amazon S3 Credentials.
-Region codes can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region).
 You can use something like [dotenv](https://github.com/bkeepers/dotenv) and add this to your .env file:
 ```
 S3_KEY=AAAA123BBBB
 S3_SECRET=abc123ABcEffgee122
-S3_REGION=us-east-1
 S3_BUCKET=uploads-development
 ```
 
@@ -123,7 +121,6 @@ HEROKU_API_KEY=ab12acvc12 \
 HEROKU_APP=your-app-name \
 S3_KEY=AAAA123BBBB \
 S3_SECRET=abc123ABcEffgee122 \
-S3_REGION=us-east-1 \
 S3_BUCKET=uploads-production \
 ```
 
