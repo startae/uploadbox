@@ -52,7 +52,9 @@ Edit CORS config for the bucket
 </CORSConfiguration>
 ```
 
-Set environmet variables
+Set the environmet variables.
+Get S3 Key an Secret from Amazon S3 Credentials.
+Region codes can be found [here](http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region)
 You can use something like [dotenv](https://github.com/bkeepers/dotenv) and add this to your .env file.
 ```
 S3_KEY=AAAA123BBBB
