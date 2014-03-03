@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uploadbox (0.1.0)
+    uploadbox (0.1.1)
       carrierwave (~> 0.9, >= 0.9.0)
       carrierwave-processing (~> 0.0, >= 0.0.2)
       coffee-rails (~> 4.0, >= 4.0.0)
@@ -58,10 +58,11 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    carrierwave (0.9.0)
+    carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
+      mime-types (>= 1.16)
     carrierwave-processing (0.0.2)
       carrierwave
     coderay (1.0.9)
@@ -119,7 +120,7 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25)
-    mini_magick (3.6.0)
+    mini_magick (3.7.0)
       subexec (~> 0.2.1)
     minitest (4.7.5)
     mono_logger (1.1.0)
