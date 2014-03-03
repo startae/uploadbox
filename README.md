@@ -1,5 +1,6 @@
 # Uploadbox
 Easy uploads for Rails application
+
 [![Code Climate](https://codeclimate.com/github/startae/uploadbox.png)](https://codeclimate.com/github/startae/uploadbox)
 
 ## Early Beta
