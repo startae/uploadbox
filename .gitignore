@@ -10,3 +10,4 @@ spec/dummy/.sass-cache
 spec/dummy/.env
 coverage/*
 tmp
+.DS_Store

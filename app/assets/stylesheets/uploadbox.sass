@@ -1,5 +1,4 @@
 @import bootstrap/progress
-@import fontello
 
 .uploadbox-image-uploader
   position: relative
@@ -103,8 +102,21 @@
       cursor: pointer
       width: 100%
 
-    .fileupload-exists, .fileupload-new
+    .fileupload-exists
       margin-left: -9999px
+
+    .fileupload-new
+      position: absolute
+      top: 50%
+      left: 50%
+      margin-top: -14px
+      margin-left: -39px
+      display: inline-block
+      background: #e5e5e5
+      font-size: 11px
+      color: #111
+      padding: 5px 15px
+      border-radius: 20px
 
   .fileupload
     position: relative
