@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'carrierwave',            '~> 0.9', '>= 0.9.0'
   s.add_dependency 'carrierwave-processing', '~> 0.0', '>= 0.0.2'
   s.add_dependency 'mini_magick',            '~> 3.6', '>= 3.6.0'
-  s.add_dependency 'jbuilder',               '~> 1.5', '>= 1.5.0'
+  s.add_dependency 'jbuilder',               '>= 1.2', '< 3'
   s.add_dependency 'resque',                 '~> 1.25', '>= 1.25.0'
   s.add_dependency 'redis',                  '~> 3.0', '>= 3.0.4'
   s.add_dependency 'heroku-api',             '~> 0.3', '>= 0.3.15'
