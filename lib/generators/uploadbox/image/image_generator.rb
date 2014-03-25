@@ -19,7 +19,7 @@ module Uploadbox
       route "mount Uploadbox::Engine => '/uploadbox', as: :uploadbox"
     end
 
-    def create_migration
+    def copy_migration
       migration_template 'migrate/create_images.rb', 'db/migrate/create_images.rb'
     end
 
