@@ -14,7 +14,7 @@ Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
 
 Add to Gemfile
 ```
-gem 'uploadbox', '0.1.3'
+gem 'uploadbox', '0.1.4'
 ```
 
 Run generators
