@@ -110,7 +110,7 @@
     .btn
       vertical-align: middle
 
-  .fileupload-exists .fileupload-new, .fileupload-new .fileupload-exists
+  .fileupload-exists .fileupload-new, .fileupload-new .fileupload-exists, .fileupload-uploading .fileupload-new
     display: none
 
   .fileupload-inline .fileupload-controls
@@ -184,3 +184,7 @@
     &:hover
       background: black
       color: white
+
+  .fileupload-uploading
+    .btn.fileupload-exists
+      display: none

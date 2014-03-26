@@ -1,8 +1,10 @@
 #= require jquery.ui.widget
+#= require _uuid
+#= require load-image.min
+#= require canvas-to-blob.min
 #= require jquery.iframe-transport
 #= require cors/jquery.postmessage-transport
 #= require cors/jquery.xdr-transport
-#= require _uuid
 #= require jquery.fileupload
 #= require _image_uploader
 #= require _uploader_preview

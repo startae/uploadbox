@@ -9,7 +9,7 @@
 
   .field
     = f.label 'Foto'
-    = f.uploads_one :picture
+    = f.uploads_one :picture, preview: :regular
 
   hr
   p = @post.images.size
