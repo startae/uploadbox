@@ -124,3 +124,11 @@ Add Redis
 ```
 heroku addons:add rediscloud:20
 ```
+
+## Upgrade from 0.1.x
+If are upgrading from 0.1.x you will need to create a migration to add a column named `original_file` to the `images` table
+```
+rails g migration add_original_file_to_images original_file:string
+rake db:migrate
+```
+

@@ -22,14 +22,6 @@ class @ImageUploader
 
   add: (e, data) =>
     @file = data.files[0]
-    loadImage @file, @appendThumb, {
-      maxWidth: @thumbContainer.data('width'),
-      maxHeight: @thumbContainer.data('height'),
-      minWidth: @thumbContainer.data('width'),
-      minHeight: @thumbContainer.data('height'),
-      canvas: true,
-      crop: true
-    }
 
     if @loader
       @loader.detach()
@@ -38,16 +30,31 @@ class @ImageUploader
       clearInterval(@verifyProcessingInterval)
 
     if @file.type.match /gif|jpe?g|png/
-      @loader = $('<div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div>').hide()
-      @preview.prepend(@loader.fadeIn())
+      loadImage @file, @appendThumb, {
+        maxWidth: @thumbContainer.data('width'),
+        maxHeight: @thumbContainer.data('height'),
+        minWidth: @thumbContainer.data('width'),
+        minHeight: @thumbContainer.data('height'),
+        canvas: true,
+        crop: true,
+        orientation: true
+      }
+
+      @loader = $('<div><div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div><div class="uploader-overlay"></div></div>').hide()
+      @loader.find('.uploader-overlay').height(@thumbContainer.data('height'))
+      @preview.prepend(@loader)
+      @loader.show()
+
       data.submit()
       @container.find('.fileupload').removeClass('processing').addClass('uploading')
       @container.closest('form').find('[type=submit]').attr("disabled", true)
 
   appendThumb: (img) =>
-    @thumbContainer.find('img').detach()
-    @container.find('.fileupload-preview.preview').append($(img).fadeIn())
+    @thumbContainer.html('')
+    $(img).hide()
+    @container.find('.fileupload-preview.preview').append($(img).show())
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-uploading')
+    @loader.show()
 
   getFormData: (arg) =>
     file = @file
@@ -79,7 +86,7 @@ class @ImageUploader
         'image[secure_random]': @fileInput.data('secure-random')
 
       complete: =>
-        @verifyProcessingInterval = setInterval(@verifyProcessing, 5000)
+        @verifyProcessingInterval = setInterval(@verifyProcessing, 500)
 
       error: =>
         @loader.detach()
@@ -94,10 +101,10 @@ class @ImageUploader
       dataType: 'json'
       url: @fileInput.data('find-url')
       data:
-        'name': filename
-        'imageable_type': @typeInput.val()
-        'upload_name': @uploadNameInput.val()
-        'secure_random': @fileInput.data('secure-random')
+        image:
+          'imageable_type': @typeInput.val()
+          'upload_name': @uploadNameInput.val()
+          'secure_random': @fileInput.data('secure-random')
 
       complete: (data) =>
         if data.responseJSON.hasOwnProperty('id')
@@ -121,15 +128,11 @@ class @ImageUploader
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   showThumb: (image) =>
-    @loader.detach()
+    @loader.fadeOut =>
+      @loader.detach()
     @idInput.val(image.id)
     @container.find('a.btn.fileupload-exists').attr('href', image.url)
     @thumbContainer.find('img').detach()
-    # img = $('<img/>')
-    # img.attr('src', image.versions[@thumbContainer.data('version')])
-    # img.attr('width', @thumbContainer.data('width'))
-    # img.attr('height', @thumbContainer.data('height')).hide()
-    # @container.find('.fileupload-preview.preview').append(img.fadeIn())
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
     @container.find('.fileupload').removeClass('uploading').removeClass('processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)

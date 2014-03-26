@@ -4,7 +4,6 @@ module Uploadbox
       Base64.encode64(policy_data.to_json).gsub("\n", "")
     end
 
-
     def s3_signature
       Base64.encode64(
         OpenSSL::HMAC.digest(
@@ -17,7 +16,21 @@ module Uploadbox
 
     def img(source, options={})
       if source.respond_to?(:url) and source.respond_to?(:width) and source.respond_to?(:height)
-        image_tag(source.url, {width: source.width, height: source.height}.merge(options))
+        if source.processing?
+          data = {
+            processing: source.processing?,
+            original: source.original_file,
+            component: 'ShowImage'
+          }
+          content_tag :div, class: 'uploadbox-image-container uploadbox-processing', style: "width: #{source.width}px; height: #{source.height}px", data: data do
+            image_tag(source.url, {width: source.width, height: source.height, style: 'display: none'}.merge(options))
+          end
+        else
+          data = {}
+          content_tag :div, class: 'uploadbox-image-container', width: source.width, height: source.height, data: data do
+            image_tag(source.url, {width: source.width, height: source.height}.merge(options))
+          end
+        end
       else
         image_tag(source, options)
       end

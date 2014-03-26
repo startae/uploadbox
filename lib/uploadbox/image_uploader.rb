@@ -22,7 +22,7 @@ module Uploadbox
       # @post.picture?
       define_method("#{upload_name}?") do
         upload = send("#{upload_name}_upload")
-        !!(upload and upload.file?)
+        !!(upload and (upload.processing? or upload.file?))
       end
 
       # @post.picture
@@ -35,6 +35,10 @@ module Uploadbox
           image = Struct.new(:url, :width, :height) do
             def to_s
               url
+            end
+
+            def processing?
+              false
             end
           end
 
@@ -66,7 +70,7 @@ module Uploadbox
 
       # Post.update_picture_versions!
       self.define_singleton_method "update_#{upload_name}_versions!" do
-        Uploadbox.const_get(upload_class_name).find_each{|upload| upload.file.recreate_versions!}
+        Uploadbox.const_get(upload_class_name).find_each{ |upload| upload.file.recreate_versions! if upload.file? }
       end
 
       # Uploadbox::PostPicture < Image
@@ -110,6 +114,14 @@ module Uploadbox
 
             def height
               dimensions[1]
+            end
+
+            def processing?
+              model.processing?
+            end
+
+            def original_file
+              model.original_file
             end
           end
         end
@@ -208,6 +220,14 @@ module Uploadbox
 
             def height
               dimensions[1]
+            end
+
+            def processing?
+              model.processing?
+            end
+
+            def original_file
+              model.original_file
             end
           end
         end

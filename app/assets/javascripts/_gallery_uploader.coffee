@@ -1,11 +1,11 @@
 class @GalleryUploader
-  constructor: (@container) ->    
+  constructor: (@container) ->
     @previews = {}
 
     @container.find('input[type="file"]:first').show().fileupload
       type: 'POST'
       dataType: 'xml'
-      replaceFileInput: false   
+      replaceFileInput: false
       autoUpload: true
       formData: @getFormData
       dropZone: @container
@@ -18,7 +18,7 @@ class @GalleryUploader
   add: (e, data) =>
     if @loader
       @loader.detach()
-    
+
     if @verifyProcessingInterval
       clearInterval(@verifyProcessingInterval)
 
@@ -59,6 +59,6 @@ class @GalleryUploader
 
   nextPreview: =>
     @currentIndex ||= 0
-    key = Object.keys(@previews)[@currentIndex] 
+    key = Object.keys(@previews)[@currentIndex]
     @currentIndex++
     @previews[key]

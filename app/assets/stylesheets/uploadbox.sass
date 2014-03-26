@@ -1,7 +1,23 @@
 @import bootstrap/progress
 
+.uploadbox-image-container
+  background: #eee
+  display: inline-block
+  img, canvas
+    display: inline-block
+    vertical-align: bottom
+
+.uploadbox-image-container.uploadbox-processing
+  background: #eee
+
 .uploadbox-image-uploader
   position: relative
+
+  .uploader-overlay
+    width: 100%
+    background: rgba(0, 0, 0, .6)
+    position: absolute
+    z-index: 1
 
   .btn
     background-color: #f7f7f7
@@ -25,11 +41,11 @@
       width: 100%
       top: 10px
 
-    &.uploading:before
-      content: 'Enviando'
+    // &.uploading:before
+    //   content: 'Enviando'
 
-    &.processing:before
-      content: 'Processando'
+    // &.processing:before
+    //   content: 'Processando'
 
 
   .fileupload-new .btn.fileupload-exists
@@ -157,7 +173,7 @@
     width: 100%
 
   .progress
-    height: 10px
+    height: 7px
     width: 100%
     margin-bottom: 0
     border-radius: 0

@@ -3,9 +3,15 @@ Uploadbox.retina_quality = 30
 Uploadbox.image_quality  = 70
 
 if Rails.env.production?
+  Uploadbox.background_processing  = true
+
   REDIS = Redis.connect(url: ENV["REDISCLOUD_URL"])
   Resque.redis = REDIS
   Resque.after_fork = Proc.new { ActiveRecord::Base.establish_connection }
+end
+
+if Rails.env.development?
+  Uploadbox.resque_server = true
 end
 
 CarrierWave.configure do |config|

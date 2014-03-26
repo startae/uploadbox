@@ -9,4 +9,5 @@
 #= require _image_uploader
 #= require _uploader_preview
 #= require _gallery_uploader
+#= require _show_image
 #= require _manager

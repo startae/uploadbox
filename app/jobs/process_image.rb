@@ -1,9 +1,9 @@
 class ProcessImage
   extend HerokuResqueAutoScale
-  
+
   @queue = :process_image
 
-  def self.perform(image_params)
-    Image.create_upload(image_params)
+  def self.perform(attributes)
+    Uploadbox.const_get(attributes['upload_class_name']).find(attributes['id']).process
   end
 end
