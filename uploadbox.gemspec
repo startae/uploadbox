@@ -17,10 +17,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
-  s.add_dependency 'rails',                  '>= 4.0.0', '< 5'
-  s.add_dependency 'slim',                   '~> 2.0', '>= 2.0.1'
-  s.add_dependency 'sass-rails',             '~> 4.0', '>= 4.0.0'
-  s.add_dependency 'coffee-rails',           '~> 4.0', '>= 4.0.0'
+  s.add_dependency 'rails',                  '>= 4.0.4', '< 5'
   s.add_dependency 'fog',                    '~> 1.15', '>= 1.15.0'
   s.add_dependency 'carrierwave',            '~> 0.9', '>= 0.9.0'
   s.add_dependency 'carrierwave-processing', '~> 0.0', '>= 0.0.2'
@@ -35,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'better_errors',      '~> 0.9', '>= 0.9.0'
   s.add_development_dependency 'binding_of_caller',  '~> 0.7', '>= 0.7.2'
   s.add_development_dependency 'pg',                 '~> 0.17', '>= 0.17.1'
-  s.add_development_dependency 'rspec-rails',        '~> 2.14', '>= 2.14.0'
+  s.add_development_dependency 'rspec-rails',        '3.0.0.beta1'
   s.add_development_dependency 'capybara',           '~> 2.1', '>= 2.1.0'
   s.add_development_dependency 'factory_girl_rails', '~> 4.2', '>= 4.2.1'
   s.add_development_dependency 'poltergeist',        '~> 1.3', '>= 1.3.0'
@@ -44,4 +41,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov',          '~> 0.7', '>= 0.7.1'
   s.add_development_dependency 'pry-rails',          '~> 0.3', '>= 0.3.2'
   s.add_development_dependency 'launchy',            '~> 2.4', '>= 2.4.2'
+  s.add_development_dependency 'sass-rails',         '~> 4.0', '>= 4.0.2'
+  s.add_development_dependency 'coffee-rails',       '~> 4.0', '>= 4.0.0'
+  s.add_development_dependency 'slim',               '~> 2.0', '>= 2.0.1'
 end
