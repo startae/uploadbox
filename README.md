@@ -112,12 +112,12 @@ Don't use your development bucket
 
 Set environmet variables
 ```
-heroku config:add
+heroku config:add \
 HEROKU_API_KEY=ab12acvc12 \
 HEROKU_APP=your-app-name \
 S3_KEY=AAAA123BBBB \
 S3_SECRET=abc123ABcEffgee122 \
-S3_BUCKET=uploads-production \
+S3_BUCKET=uploads-production
 ```
 
 Add Redis
