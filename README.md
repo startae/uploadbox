@@ -122,7 +122,7 @@ S3_BUCKET=uploads-production
 
 Add Redis
 ```
-heroku addons:add rediscloud:20
+heroku addons:add rediscloud
 ```
 
 ## Upgrade from 0.1.x
