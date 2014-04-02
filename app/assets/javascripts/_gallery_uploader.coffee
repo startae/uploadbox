@@ -27,6 +27,7 @@ class @GalleryUploader
       @container.append(@clone)
       previewInstanceName = Manager.getInstanceName('UploaderPreview')
       preview = new UploaderPreview(@clone, data.files[0])
+      @container.trigger('upload:start', preview)
       @clone.data(previewInstanceName, preview)
       @previews[preview.id()] = preview
       data.context = preview.id()

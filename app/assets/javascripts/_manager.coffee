@@ -6,14 +6,13 @@ class @Manager
     classNames = container.data('component').split(' ')
 
     for className in classNames
-      try
+      if window[className]
         instanceName = Manager.getInstanceName(className)
         unless container.data(instanceName)
           instance = new (eval(className))(container)
           container.data(instanceName, instance)
-      catch error
-        try
-          console.warn "#{className} component not found"
+      else
+        console.warn "#{className} component not found"
 
 $(document).ready ->
   $('[data-component]').each (i, el) -> Manager.init($(el))

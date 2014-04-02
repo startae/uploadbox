@@ -90,6 +90,8 @@ class @UploaderPreview
     @container.find('.fileupload').removeClass('uploading').addClass('processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
+    $(@).trigger('upload:done', @fileInput.data('url') + @filePath)
+
     $.ajax
       type: 'POST'
       url: @fileInput.data('callback-url')
@@ -130,7 +132,6 @@ class @UploaderPreview
         @container.detach()
 
   showThumb: (image) =>
-    console.log 'showThumb'
     @loader.fadeOut =>
       @loader.detach()
     @idInput.val(image.id)
