@@ -10,6 +10,13 @@ require 'resque'
 require 'heroku_resque_auto_scale'
 require 'dotenv-rails'
 
+# Allows redirects from https to http as facebook does
+module OpenURI
+  def self.redirectable?(uri1,uri2)
+    uri1.scheme.downcase == uri2.scheme.downcase || (/\A(?:https?|ftp)\z/i =~ uri1.scheme && /\A(?:https?|ftp)\z/i =~ uri2.scheme)
+  end
+end
+
 module Uploadbox
   class Engine < ::Rails::Engine
     config.generators do |g|
