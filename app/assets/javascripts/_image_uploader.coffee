@@ -1,3 +1,5 @@
+console.log 'image uploader'
+
 class @ImageUploader
   constructor: (@container) ->
     @preview = @container.find('[data-provides="fileupload"]')
@@ -7,6 +9,8 @@ class @ImageUploader
     @idInput = @container.find('[data-item="id"]')
     @container.find('a.btn.fileupload-exists').bind('ajax:success', @delete)
     @thumbContainer = @container.find('.fileupload-preview.preview')
+
+    @setupLabel()
 
     @fileInput.show()
 
@@ -20,16 +24,18 @@ class @ImageUploader
       progress: @progress
       done: @done
 
-  add: (e, data) =>
-    @file = data.files[0]
+    console.log 'construct'
 
+  add: (e, data) =>
+    console.log 'add'
+    @file = data.files[0]
     if @loader
       @loader.detach()
 
     if @verifyProcessingInterval
       clearInterval(@verifyProcessingInterval)
 
-    if @file.type.match /gif|jpe?g|png/
+    if @file.type and @file.type.match /gif|jpe?g|png/
       loadImage @file, @appendThumb, {
         maxWidth: @thumbContainer.data('width'),
         maxHeight: @thumbContainer.data('height'),
@@ -49,6 +55,20 @@ class @ImageUploader
       @container.find('.fileupload').removeClass('processing').addClass('uploading')
       @container.closest('form').find('[type=submit]').attr("disabled", true)
 
+    # ie8 and ie9
+    unless @file.type
+      # @loader = $('<div><div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div><div class="uploader-overlay"></div></div>').hide()
+      # @loader.find('.uploader-overlay').height(@thumbContainer.data('height'))
+      # @preview.prepend(@loader)
+      # @loader.show()
+
+      console.log 'before'
+      data.submit()
+      console.log 'after'
+      # @container.find('.fileupload').removeClass('processing').addClass('uploading')
+      # @container.closest('form').find('[type=submit]').attr("disabled", true)
+
+
   appendThumb: (img) =>
     @thumbContainer.html('')
     $(img).hide()
@@ -57,6 +77,7 @@ class @ImageUploader
     @loader.show()
 
   getFormData: (arg) =>
+    console.log 'getFormData'
     file = @file
     @filePath = @container.find('input[name="key"]').val() + file.name
     [
@@ -70,10 +91,12 @@ class @ImageUploader
     ]
 
   progress: (e, data) =>
+    console.log 'progress'
     progress = parseInt(data.loaded / data.total * 100, 10)
     @loader.find('.bar').css({width: progress + '%'})
 
   done: (e, data) =>
+    console.log 'done'
     @container.find('.fileupload').removeClass('uploading').addClass('processing')
 
     $.ajax
@@ -136,3 +159,9 @@ class @ImageUploader
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
     @container.find('.fileupload').removeClass('uploading').removeClass('processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)
+
+  setupLabel: =>
+    labels = @container.find('.fileupload-actions .fileupload-new, .fileupload-actions .fileupload-exists')
+    labels.each (index, label) ->
+      $(label).css({marginLeft: $(label).outerWidth() * -0.5, marginTop: $(label).outerHeight() * -0.5})
+
