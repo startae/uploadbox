@@ -37,7 +37,7 @@ end
 
 class ActionView::Helpers::FormBuilder
   def uploads_one(upload_name, options={})
-    upload_model_class = "Uploadbox::#{@object.class.to_s + upload_name.to_s.camelize}".constantize
+    upload_model_class = "Uploadbox::#{@object.class.base_class.to_s + upload_name.to_s.camelize}".constantize
     options.reverse_merge!(preview: upload_model_class.versions.keys.first,
                            namespace: false,
                            default: false,
@@ -62,7 +62,7 @@ class ActionView::Helpers::FormBuilder
   end
 
   def uploads_many(upload_name, options={})
-    upload_model_class = "Uploadbox::#{@object.class.to_s + upload_name.to_s.camelize}".constantize
+    upload_model_class = "Uploadbox::#{@object.class.base_class.to_s + upload_name.to_s.camelize}".constantize
     options.reverse_merge!(preview: upload_model_class.versions.keys.first,
                            namespace: false,
                            default: false,

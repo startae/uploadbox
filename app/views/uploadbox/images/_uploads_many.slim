@@ -22,7 +22,7 @@
             input type="hidden" name="acl" value="public-read"
             input type="hidden" name="key"
 
-            input type="hidden" name="image[imageable_type]" value="#{resource.class}"
+            input type="hidden" name="image[imageable_type]" value="#{resource.class.base_class}"
             input type="hidden" name="image[upload_name]" value="#{upload_name}"
           - if removable
             - if resource.send(upload_name).present?
