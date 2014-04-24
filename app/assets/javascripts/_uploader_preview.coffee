@@ -26,6 +26,8 @@ class @UploaderPreview
     @idInput = @container.find('[data-item="id"]')
     @thumbContainer = @container.find('.fileupload-preview.thumbnail')
 
+    @setupLabel()
+
   startLoader: =>
     loadImage @file, @appendThumb, {
       maxWidth: @thumbContainer.data('width'),
@@ -146,4 +148,9 @@ class @UploaderPreview
   delete: =>
     @idInput.val('')
     @container.detach()
+
+  setupLabel: =>
+    labels = @container.find('.fileupload-actions .fileupload-new, .fileupload-actions .fileupload-exists')
+    labels.each (index, label) ->
+      $(label).css({marginLeft: $(label).outerWidth() * -0.5, marginTop: $(label).outerHeight() * -0.5})
 

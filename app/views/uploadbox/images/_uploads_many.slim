@@ -13,7 +13,6 @@
           span.btn.btn-file style="width: #{width}px; height: #{height}px;"
             span.fileupload-new = choose_label
             span.fileupload-exists = update_label
-            i.icon.icon-plus-1 style="line-height: #{height}px; font-size: #{(width * 0.4).to_i}px"
 
             input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/" accept="image/png image/x-png, image/gif, image/jpeg" style="display: none; width: #{width}px; height: #{height}px;" multiple="true"
             input type="hidden" name="policy" value="#{s3_policy}"

@@ -15,6 +15,8 @@ class @GalleryUploader
       done: @done
       fail: @fail
 
+    @setupLabel()
+
   add: (e, data) =>
     if @loader
       @loader.detach()
@@ -63,3 +65,9 @@ class @GalleryUploader
     key = Object.keys(@previews)[@currentIndex]
     @currentIndex++
     @previews[key]
+
+  setupLabel: =>
+    labels = @container.find('.fileupload-actions .fileupload-new, .fileupload-actions .fileupload-exists')
+    labels.each (index, label) ->
+      $(label).css({marginLeft: $(label).outerWidth() * -0.5, marginTop: $(label).outerHeight() * -0.5})
+
