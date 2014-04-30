@@ -56,9 +56,13 @@ module Uploadbox
       end
 
       # @post.picture=(id)
-      define_method("#{upload_name}=") do |upload_id|
-        if upload_id.present?
-          self.send("#{upload_name}_upload=", upload_class.find(upload_id))
+      define_method("#{upload_name}=") do |upload_or_id|
+        # deals with ie8 and ie9
+        if upload_or_id.is_a? ActionDispatch::Http::UploadedFile
+          upload = upload_class.create(file: upload_or_id)
+          self.send("#{upload_name}_upload=", upload)
+        elsif upload_or_id.present?
+          self.send("#{upload_name}_upload=", upload_class.find(upload_or_id))
         end
       end
 
@@ -163,9 +167,17 @@ module Uploadbox
 
       # @post.images=([id, id])
       define_method("#{upload_name}=") do |ids|
-        self.send(upload_name).send('replace', [])
-        for id in ids.select(&:present?)
-          self.send(upload_name).send('<<', upload_class.find(id))
+
+
+        # deals with ie8 and ie9
+        if ids[0].is_a? ActionDispatch::Http::UploadedFile
+          upload = upload_class.create(file: ids[0])
+          self.send(upload_name).send('<<', upload)
+        else
+          self.send(upload_name).send('replace', [])
+          for id in ids.select(&:present?)
+            self.send(upload_name).send('<<', upload_class.find(id))
+          end
         end
       end
 

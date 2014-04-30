@@ -1,36 +1,46 @@
-= form.fields_for :image do
-  - secure_random = SecureRandom.uuid
-  .uploadbox-image-uploader.uploads-one data-component="ImageUploader" style="width: #{width}px; height: #{height}px;"
+= form.fields_for upload_name do |f|
+  / forces multipart/form-data
+  = f.file_field :temp, style: 'display: none'
+
+  / old browsers
+  - if browser.ie? and browser.version.to_i <= 9
     - if namespace
-      input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
+      input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}" data-item="id" type="file" accept="image/jpg,image/png"
     - else
-      input name="[#{resource.class.name.underscore}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
+      input name="[#{resource.class.name.underscore}]#{upload_name}" data-item="id" type="file" accept="image/jpg,image/png"
+  - else
+    - secure_random = SecureRandom.uuid
+    .uploadbox-image-uploader.uploads-one data-component="ImageUploader" style="width: #{width}px; height: #{height}px;"
+      - if namespace
+        input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
+      - else
+        input name="[#{resource.class.name.underscore}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
 
-    .fileupload data-provides="fileupload" class="fileupload-#{(resource.send("#{upload_name}?") or default) ? 'exists' : 'new'}"
-      .fileupload-preview.preview data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
-        - if resource.send("#{upload_name}?")
-          = img resource.send(upload_name).send(version)
-        - elsif default
-          = image_tag default, width: width, height: height
+      .fileupload data-provides="fileupload" class="fileupload-#{(resource.send("#{upload_name}?") or default) ? 'exists' : 'new'}"
+        .fileupload-preview.preview data-version="#{version}" data-width="#{width}" data-height="#{height}" style="width: #{width}px; height: #{height}px;"
+          - if resource.send("#{upload_name}?")
+            = img resource.send(upload_name).send(version)
+          - elsif default
+            = image_tag default, width: width, height: height
 
-      .fileupload-actions
-        span.btn.btn-file style="width: #{width}px; height: #{height}px;"
-          span.fileupload-new = choose_label
-          span.fileupload-exists = update_label
+        .fileupload-actions
+          span.btn.btn-file style="width: #{width}px; height: #{height}px;"
+            span.fileupload-new = choose_label
+            span.fileupload-exists = update_label
 
 
-          input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/" data-secure-random="#{secure_random}" accept="image/*" style="display: none; width: #{width}px; height: #{height}px;"
-          input type="hidden" name="policy" value="#{s3_policy}"
-          input type="hidden" name="signature" value="#{s3_signature}"
-          input type="hidden" name="AWSAccessKeyId" value="#{CarrierWave::Uploader::Base.fog_credentials[:aws_access_key_id]}"
-          input type="hidden" name="acl" value="public-read"
-          input type="hidden" name="key" value="uploads/#{secure_random}/"
+            input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/" data-secure-random="#{secure_random}" accept="image/*" style="width: #{width}px; height: #{height}px;"
+            input type="hidden" name="policy" value="#{s3_policy}"
+            input type="hidden" name="signature" value="#{s3_signature}"
+            input type="hidden" name="AWSAccessKeyId" value="#{CarrierWave::Uploader::Base.fog_credentials[:aws_access_key_id]}"
+            input type="hidden" name="acl" value="public-read"
+            input type="hidden" name="key" value="uploads/#{secure_random}/"
 
-          input type="hidden" name="image[imageable_type]" value="#{resource.class.base_class}"
-          input type="hidden" name="image[upload_name]" value="#{upload_name}"
-        - if removable
-          - if resource.send(upload_name).present?
-            = link_to destroy_label, uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
-          - else
-            = link_to destroy_label, '#', class: 'btn fileupload-exists', remote: true, method: :delete
+            input type="hidden" name="image[imageable_type]" value="#{resource.class.base_class}"
+            input type="hidden" name="image[upload_name]" value="#{upload_name}"
+          - if removable
+            - if resource.send(upload_name).present?
+              = link_to destroy_label, uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
+            - else
+              = link_to destroy_label, '#', class: 'btn fileupload-exists', remote: true, method: :delete
 

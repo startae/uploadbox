@@ -9,6 +9,7 @@ require 'jbuilder'
 require 'resque'
 require 'heroku_resque_auto_scale'
 require 'dotenv-rails'
+require 'browser'
 
 # Allows redirects from https to http as facebook does
 module OpenURI

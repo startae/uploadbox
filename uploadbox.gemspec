@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'redis',                  '~> 3.0', '>= 3.0.4'
   s.add_dependency 'heroku-api',             '~> 0.3', '>= 0.3.15'
   s.add_dependency 'dotenv-rails',           '~> 0.10','>= 0.10.0'
+  s.add_dependency 'browser',                '~> 0.4', '>= 0.4.1'
 
   s.add_development_dependency 'jquery-rails',       '~> 3.0', '>= 3.0.4'
   s.add_development_dependency 'better_errors',      '~> 0.9', '>= 0.9.0'

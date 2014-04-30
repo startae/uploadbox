@@ -1,5 +1,3 @@
-console.log 'image uploader'
-
 class @ImageUploader
   constructor: (@container) ->
     @preview = @container.find('[data-provides="fileupload"]')
@@ -14,6 +12,7 @@ class @ImageUploader
 
     @fileInput.show()
 
+
     @fileInput.fileupload
       type: 'POST'
       dataType: 'xml'
@@ -24,10 +23,7 @@ class @ImageUploader
       progress: @progress
       done: @done
 
-    console.log 'construct'
-
   add: (e, data) =>
-    console.log 'add'
     @file = data.files[0]
     if @loader
       @loader.detach()
@@ -55,20 +51,6 @@ class @ImageUploader
       @container.find('.fileupload').removeClass('processing').addClass('uploading')
       @container.closest('form').find('[type=submit]').attr("disabled", true)
 
-    # ie8 and ie9
-    unless @file.type
-      # @loader = $('<div><div class="progress progress-striped active"><div class="bar" style="width: 0%;"></div></div><div class="uploader-overlay"></div></div>').hide()
-      # @loader.find('.uploader-overlay').height(@thumbContainer.data('height'))
-      # @preview.prepend(@loader)
-      # @loader.show()
-
-      console.log 'before'
-      data.submit()
-      console.log 'after'
-      # @container.find('.fileupload').removeClass('processing').addClass('uploading')
-      # @container.closest('form').find('[type=submit]').attr("disabled", true)
-
-
   appendThumb: (img) =>
     @thumbContainer.html('')
     $(img).hide()
@@ -77,7 +59,6 @@ class @ImageUploader
     @loader.show()
 
   getFormData: (arg) =>
-    console.log 'getFormData'
     file = @file
     @filePath = @container.find('input[name="key"]').val() + file.name
     [
@@ -91,12 +72,10 @@ class @ImageUploader
     ]
 
   progress: (e, data) =>
-    console.log 'progress'
     progress = parseInt(data.loaded / data.total * 100, 10)
     @loader.find('.bar').css({width: progress + '%'})
 
   done: (e, data) =>
-    console.log 'done'
     @container.find('.fileupload').removeClass('uploading').addClass('processing')
 
     $.ajax

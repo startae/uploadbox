@@ -3,6 +3,8 @@
 .uploadbox-image-container
   background: #eee
   display: inline-block
+  // input[type="file"]
+  //   display: none
   img, canvas
     display: inline-block
     vertical-align: bottom
@@ -90,13 +92,18 @@
       top: 0
       right: 0
       margin: 0
+      background: yellow
       opacity: 0
       filter: alpha(opacity = 0)
-      transform: translate(-300px, 0) scale(4)
-      font-size: 23px
+      font-size: 600px
       direction: ltr
       cursor: pointer
-      width: 100%
+      display: block
+      overflow: hidden
+      &:active
+        outline: none
+        border: none
+
 
     .fileupload-exists
       display: none
@@ -182,7 +189,7 @@
 
   .btn.fileupload-exists
     position: absolute
-    top: -10px
+    top: 0px
     right: -10px
     z-index: 3
     padding: 0
