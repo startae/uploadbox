@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    uploadbox (0.2.0.beta2)
+    uploadbox (0.2.0.rc1)
       browser (~> 0.4, >= 0.4.1)
       carrierwave (~> 0.9, >= 0.9.0)
       carrierwave-processing (~> 0.0, >= 0.0.2)
