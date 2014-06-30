@@ -5,6 +5,10 @@ class Image < ActiveRecord::Base
     update(remote_file_url: original_file)
   end
 
+  def name
+    File.basename(original_file)
+  end
+
   def processing?
     file.blank?
   end

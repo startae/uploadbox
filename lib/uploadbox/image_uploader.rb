@@ -127,6 +127,7 @@ module Uploadbox
             def original_file
               model.original_file
             end
+
           end
         end
         mount_uploader :file, dynamic_uploader

@@ -1,0 +1,44 @@
+= form.fields_for upload_name do |f|
+  / forces multipart/form-data
+  = f.file_field :temp, style: 'display: none'
+
+  / old browsers
+  - if browser.ie? and browser.version.to_i <= 9
+    - if namespace
+      input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}" data-item="id" type="file"
+    - else
+      input name="[#{resource.class.name.underscore}]#{upload_name}" data-item="id" type="file"
+  - else
+    - secure_random = SecureRandom.uuid
+    .uploadbox-image-uploader.uploads-one data-component="FileUploader"
+      - if namespace
+        input name="[#{resource.class.name.underscore}][#{namespace}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
+      - else
+        input name="[#{resource.class.name.underscore}]#{upload_name}" data-item="id" type="hidden" value="#{resource.send(upload_name).try :id}"
+
+      .fileupload data-provides="fileupload" class="fileupload-#{resource.send("#{upload_name}?") ? 'exists' : 'new'}"
+        .fileupload-preview.preview
+          - if resource.send("#{upload_name}?")
+            = link_to resource.send(upload_name).name, resource.send(upload_name).original_file
+
+        .fileupload-actions
+          span.btn.btn-file
+            span.fileupload-new = choose_label
+            span.fileupload-exists = update_label
+
+
+            input type="file" name="image[file]" data-callback-url="#{uploadbox.images_path}" data-find-url="#{uploadbox.find_images_path(format: :json)}" data-url="https://#{CarrierWave::Uploader::Base.fog_directory}.s3.amazonaws.com/" data-secure-random="#{secure_random}"
+            input type="hidden" name="policy" value="#{s3_policy}"
+            input type="hidden" name="signature" value="#{s3_signature}"
+            input type="hidden" name="AWSAccessKeyId" value="#{CarrierWave::Uploader::Base.fog_credentials[:aws_access_key_id]}"
+            input type="hidden" name="acl" value="public-read"
+            input type="hidden" name="key" value="uploads/#{secure_random}/"
+
+            input type="hidden" name="image[imageable_type]" value="#{resource.class.base_class}"
+            input type="hidden" name="image[upload_name]" value="#{upload_name}"
+          - if removable
+            - if resource.send(upload_name).present?
+              = link_to destroy_label, uploadbox.image_path(resource.send(upload_name)), class: 'btn fileupload-exists', remote: true, method: :delete
+            - else
+              = link_to destroy_label, '#', class: 'btn fileupload-exists', remote: true, method: :delete
+

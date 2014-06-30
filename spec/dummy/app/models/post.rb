@@ -3,5 +3,7 @@ class Post < ActiveRecord::Base
 
   uploads_many :images, thumb: [90, 90], regular: [200, 200]
 
+  uploads_one :attachment
+
   validates :title, presence: true
 end

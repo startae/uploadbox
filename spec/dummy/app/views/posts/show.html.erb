@@ -9,6 +9,11 @@
 </p>
 
 <p>
+  <strong>Attachment:</strong>
+  <%= link_to(@post.attachment.name, @post.attachment.original_file) if @post.attachment? %>
+</p>
+
+<p>
   <%= img @post.picture.big, alt: 'Lorem ipsum' %>
   <strong>Regular:</strong>
   <%= img @post.picture.regular, alt: 'Lorem ipsum' %>

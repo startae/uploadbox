@@ -12,10 +12,12 @@ module Uploadbox
 
       upload = Uploadbox.const_get(upload_class_name).create!(attributes)
 
-      if Uploadbox.background_processing
-        Resque.enqueue(ProcessImage, {id: upload.id, upload_class_name: upload_class_name})
-      else
-        upload.process
+      unless params["processed"].present?
+        if Uploadbox.background_processing
+          Resque.enqueue(ProcessImage, {id: upload.id, upload_class_name: upload_class_name})
+        else
+          upload.process
+        end
       end
 
       render nothing: true
@@ -34,7 +36,7 @@ module Uploadbox
 
     private
       def image_params
-        params.require(:image).permit(:remote_file_url, :imageable_type, :upload_name, :secure_random)
+        params.require(:image).permit(:remote_file_url, :imageable_type, :upload_name, :secure_random, :processed)
       end
 
       def upload_class_name

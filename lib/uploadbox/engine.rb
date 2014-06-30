@@ -39,27 +39,47 @@ end
 class ActionView::Helpers::FormBuilder
   def uploads_one(upload_name, options={})
     upload_model_class = "Uploadbox::#{@object.class.base_class.to_s + upload_name.to_s.camelize}".constantize
-    options.reverse_merge!(preview: upload_model_class.versions.keys.first,
-                           namespace: false,
-                           default: false,
-                           update_label: 'Alterar',
-                           choose_label: 'Escolher',
-                           destroy_label: '&times;'.html_safe)
-    dimensions = upload_model_class.versions[options[:preview]]
-    @template.render partial: 'uploadbox/images/uploads_one', locals: {
-      upload_name: upload_name,
-      resource: @object,
-      form: self,
-      version: options[:preview],
-      width: dimensions[0],
-      height: dimensions[1],
-      namespace: options[:namespace],
-      default: options[:default],
-      removable: upload_model_class.removable?,
-      update_label: options[:update_label],
-      choose_label: options[:choose_label],
-      destroy_label: options[:destroy_label]
-    }
+
+    if upload_model_class.versions.present?
+      options.reverse_merge!(preview: upload_model_class.versions.keys.first,
+                             namespace: false,
+                             default: false,
+                             update_label: 'Alterar',
+                             choose_label: 'Escolher',
+                             destroy_label: '&times;'.html_safe)
+      dimensions = upload_model_class.versions[options[:preview]]
+      @template.render partial: 'uploadbox/images/uploads_one', locals: {
+        upload_name: upload_name,
+        resource: @object,
+        form: self,
+        version: options[:preview],
+        width: dimensions[0],
+        height: dimensions[1],
+        namespace: options[:namespace],
+        default: options[:default],
+        removable: upload_model_class.removable?,
+        update_label: options[:update_label],
+        choose_label: options[:choose_label],
+        destroy_label: options[:destroy_label]
+      }
+    else
+      options.reverse_merge!(namespace: false,
+                             default: false,
+                             update_label: 'Alterar',
+                             choose_label: 'Escolher',
+                             destroy_label: '&times;'.html_safe)
+      dimensions = upload_model_class.versions[options[:preview]]
+      @template.render partial: 'uploadbox/files/uploads_one', locals: {
+        upload_name: upload_name,
+        resource: @object,
+        form: self,
+        namespace: options[:namespace],
+        removable: upload_model_class.removable?,
+        update_label: options[:update_label],
+        choose_label: options[:choose_label],
+        destroy_label: options[:destroy_label]
+      }
+    end
   end
 
   def uploads_many(upload_name, options={})
