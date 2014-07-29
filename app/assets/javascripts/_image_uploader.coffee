@@ -77,6 +77,7 @@ class @ImageUploader
 
   done: (e, data) =>
     @container.find('.fileupload').removeClass('uploading').addClass('processing')
+    @originalFileURL = @fileInput.data('url') + @filePath
 
     $.ajax
       type: 'POST'
@@ -130,6 +131,7 @@ class @ImageUploader
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   showThumb: (image) =>
+    @container.trigger('uploadbox:complete', {url: @originalFileURL})
     @loader.fadeOut =>
       @loader.detach()
     @idInput.val(image.id)
