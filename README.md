@@ -56,7 +56,14 @@ Edit CORS config for the bucket
 </CORSConfiguration>
 ```
 
-Get S3 Key an Secret from Amazon S3 Credentials and update your .env file
+Get S3 Key and Secret from Amazon S3 Credentials and update your `secrets.yml` file
+
+```
+development:
+  s3_bucket: your-bucket-name
+  s3_key: your-s3-key
+  s3_secret: your-s3-secret
+```
 
 ## Usage
 Add `uploads_one` to your model
@@ -118,6 +125,14 @@ HEROKU_APP=your-app-name \
 S3_KEY=AAAA123BBBB \
 S3_SECRET=abc123ABcEffgee122 \
 S3_BUCKET=uploads-production
+```
+
+Update your secrets.yml file
+```
+production:
+  s3_key:  <%= ENV["S3_KEY"] %>
+  s3_secret: <%= ENV["S3_SECRET"] %>
+  s3_bucket: <%= ENV["S3_BUCKET"] %>
 ```
 
 Add Redis

@@ -8,13 +8,6 @@ module Uploadbox
       copy_file 'initializers/uploadbox.rb', 'config/initializers/uploadbox.rb'
     end
 
-    def create_dotenv
-      create_file '.env' unless File.exist?('.env')
-      append_to_file '.env', "\nS3_KEY=your-s3-key"
-      append_to_file '.env', "\nS3_SECRET=your-s3-secret"
-      append_to_file '.env', "\nS3_BUCKET=your-s3-bucket"
-    end
-
     def add_route
       route "mount Uploadbox::Engine => '/uploadbox', as: :uploadbox"
     end
