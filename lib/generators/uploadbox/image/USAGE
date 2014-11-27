@@ -7,5 +7,4 @@ Example:
     This will create:
         config/initializers/uploadbox.rb
         db/migrate/create_images.rb
-        .env
         And will update your routes.rb
