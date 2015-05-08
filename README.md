@@ -14,25 +14,25 @@ That said, it's already being used on production projects.
 
 Make sure you have [ImageMagick](http://www.imagemagick.org/) installed.
 
-Add to Gemfile
+#### Add to Gemfile
 
 ```
 gem 'uploadbox', '0.2.0'
 ```
 
-Run generators
+#### Run generators
 
 ```
 rails g uploadbox:image
 ```
 
-Migrate database
+#### Migrate database
 
 ```
 rake db:migrate
 ```
 
-Add jquery and uploadbox to `application.js`
+#### Add jquery and uploadbox to `application.js`
 
 ```
 //= require jquery
@@ -40,7 +40,7 @@ Add jquery and uploadbox to `application.js`
 //= require uploadbox
 ```
 
-Add uploadbox to `application.css`
+#### Add uploadbox to `application.css`
 
 ```
 /*
@@ -48,9 +48,9 @@ Add uploadbox to `application.css`
  */
 ```
 
-Create a development bucket on [Amazon S3](http://aws.amazon.com/s3/)
+#### Create a development bucket on [Amazon S3](http://aws.amazon.com/s3/)
 
-Edit CORS config for the bucket
+#### Edit CORS config for the bucket
 
 ```
 <CORSConfiguration>
@@ -64,7 +64,7 @@ Edit CORS config for the bucket
 </CORSConfiguration>
 ```
 
-Get S3 Key and Secret from Amazon S3 Credentials and update your `secrets.yml` file.
+#### Get S3 Key and Secret from Amazon S3 Credentials and update your `secrets.yml` file.
 
 ```
 development:
@@ -75,7 +75,9 @@ development:
 
 ## Usage
 
-Add `uploads_one` to your model
+### uploads_one
+
+#### Add `uploads_one` to your model
 
 ```
 class Post < ActiveRecord::Base
@@ -86,13 +88,20 @@ end
 If `placeholder` is set posts without uploads will render the placeholder.
 Empty `@post.picture.thumb` will render `app/assets/images/thumb_default.png`
 
-Add field to form
+#### Add field to form
 
 ```
 <%= f.uploads_one :picture %>
 ```
 
-Allow attribute on controller
+You can pass a `:preview` option, so that the field will have the dimensions specified in the model.
+
+```
+<%= f.uploads_one :picture, preview: :thumb %>
+```
+
+
+#### Allow attribute on controller
 
 ```
 def post_params
@@ -100,10 +109,56 @@ def post_params
 end
 ```
 
-Show image
+#### Show image
 
 ```
 <%= img @post.picture.regular if @post.picture? %>
+```
+
+### uploads_many
+
+#### Add `uploads_many` to your model
+
+```
+class User < ActiveRecord::Base
+  uploads_many :pictures, thumb: [100, 100], regular: [600, 600], placeholder: 'default.png'
+end
+```
+
+#### Add field to form
+
+```
+<%= f.uploads_many :pictures %>
+```
+
+You can pass a `:preview` option, so that the field will have the dimensions specified in the model.
+
+```
+<%= f.uploads_one :pictures, preview: :thumb %>
+```
+
+#### Allow attributes on controller
+
+```
+def post_params
+  params.require(:user).permit(..., pictures: [])
+end
+```
+
+#### Show images
+
+```
+<% @user.pictures.each do |pic| %>
+  <%= img pic.regular %>
+<% end %>
+```
+
+#### Set `background_processing` to `false` if you're using Heroku
+
+Go to `config/initializers/uploadbox.rb`, find the line where `background_processing` is being set and set it to `false`.
+
+```
+Uploadbox.background_processing  = false
 ```
 
 ## Recreate versions
@@ -118,7 +173,7 @@ Post.update_picture_versions!
 
 ## Heroku
 
-Create a production bucket on S3 (Don't use your development bucket)
+#### Create a production bucket on S3 (Don't use your development bucket)
 
 ```
 <CORSConfiguration>
@@ -132,7 +187,7 @@ Create a production bucket on S3 (Don't use your development bucket)
 </CORSConfiguration>
 ```
 
-Set environment variables
+#### Set environment variables
 
 ```
 heroku config:add \
@@ -143,7 +198,7 @@ S3_SECRET=abc123ABcEffgee122 \
 S3_BUCKET=uploads-production
 ```
 
-Update your secrets.yml file
+#### Update your secrets.yml file
 
 ```
 production:
@@ -152,7 +207,7 @@ production:
   s3_bucket: <%= ENV["S3_BUCKET"] %>
 ```
 
-Add Redis
+#### Add Redis
 
 ```
 heroku addons:add rediscloud
