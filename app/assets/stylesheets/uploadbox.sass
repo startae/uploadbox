@@ -10,7 +10,7 @@
 
   .uploader-overlay
     width: 100%
-    background: rgba(0, 0, 0, .6)
+    background: rgba(#000, .6)
     position: absolute
     z-index: 1
 
@@ -36,11 +36,9 @@
       width: 100%
       top: 10px
 
-    // &.uploading:before
-    //   content: 'Enviando'
+    &.is-uploading
 
-    // &.processing:before
-    //   content: 'Processando'
+    &.is-processing
 
 
   .fileupload-new .btn.fileupload-exists
@@ -218,8 +216,6 @@
   .fileupload-exists
     .btn.fileupload-exists
       display: block
-    // .fileupload-new
-    //   display: none !important
 
   .fileupload
     background: transparent
