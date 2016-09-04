@@ -1,6 +1,6 @@
 class @ShowImage
   constructor: (@container) ->
-    if @container.data('processing') == true
+    if @container.data('is-processing') == true
       loadImage @container.data('original'), @append, {
         maxWidth: @container.find('img').attr('width'),
         maxHeight: @container.find('img').attr('height'),
@@ -12,4 +12,3 @@ class @ShowImage
       }
   append: (img) =>
     @container.append(img)
-

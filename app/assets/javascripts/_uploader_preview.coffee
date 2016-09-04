@@ -40,7 +40,7 @@ class @UploaderPreview
     }
     @loader.find('.uploader-overlay').height(@thumbContainer.data('height'))
     @container.prepend(@loader.show())
-    @container.find('.fileupload').removeClass('processing').addClass('uploading')
+    @container.find('.fileupload').removeClass('is-processing').addClass('is-uploading')
 
   add: (e, data) =>
     @file = data.files[0]
@@ -89,7 +89,7 @@ class @UploaderPreview
     @loader.find('.bar').css({width: progress + '%'})
 
   done: (data) =>
-    @container.find('.fileupload').removeClass('uploading').addClass('processing')
+    @container.find('.fileupload').removeClass('is-uploading').addClass('is-processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
     $(@).trigger('upload:done', @fileInput.data('url') + @filePath)
@@ -108,7 +108,7 @@ class @UploaderPreview
 
       error: =>
         @loader.detach()
-        @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+        @container.find('.fileupload').removeClass('is-uploading').removeClass('is-processing')
         @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   verifyProcessing: =>
@@ -139,7 +139,7 @@ class @UploaderPreview
     @idInput.val(image.id)
     @container.find('a.btn.fileupload-exists').attr('href', image.url)
     @container.find('.fileupload').removeClass('fileupload-new').removeClass('fileupload-uploading').addClass('fileupload-exists')
-    @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+    @container.find('.fileupload').removeClass('is-uploading').removeClass('is-processing')
 
   fail: =>
     @loader.detach()

@@ -38,7 +38,7 @@ class @FileUploader
     @loader.show()
 
     data.submit()
-    @container.find('.fileupload').removeClass('processing').addClass('uploading')
+    @container.find('.fileupload').removeClass('is-processing').addClass('is-uploading')
     @container.closest('form').find('[type=submit]').attr("disabled", true)
 
   makePreview: (file) =>
@@ -64,7 +64,7 @@ class @FileUploader
     @loader.find('.bar').css({width: progress + '%'})
 
   done: (e, data) =>
-    @container.find('.fileupload').removeClass('uploading').addClass('processing')
+    @container.find('.fileupload').removeClass('is-uploading').addClass('is-processing')
     @originalFileURL = @fileInput.data('url') + @filePath
     $.ajax
       type: 'POST'
@@ -81,7 +81,7 @@ class @FileUploader
 
       error: =>
         @loader.detach()
-        @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+        @container.find('.fileupload').removeClass('is-uploading').removeClass('is-processing')
         @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   verifyProcessing: =>
@@ -104,7 +104,7 @@ class @FileUploader
 
       error: =>
         @loader.detach()
-        @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+        @container.find('.fileupload').removeClass('is-uploading').removeClass('is-processing')
         @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   delete: =>
@@ -114,7 +114,7 @@ class @FileUploader
 
   fail: (e, data) =>
     @loader.detach()
-    @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+    @container.find('.fileupload').removeClass('is-uploading').removeClass('is-processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   showThumb: (image) =>
@@ -125,7 +125,7 @@ class @FileUploader
     @container.find('a.btn.fileupload-exists').attr('href', image.url)
     @container.find('[data-item="filename"]').attr('href', @originalFileURL).attr('target', '_blank')
     @container.find('.fileupload').removeClass('fileupload-new').addClass('fileupload-exists')
-    @container.find('.fileupload').removeClass('uploading').removeClass('processing')
+    @container.find('.fileupload').removeClass('is-uploading').removeClass('is-processing')
     @container.closest('form').find('[type=submit]').attr("disabled", false)
 
   setupLabel: =>
