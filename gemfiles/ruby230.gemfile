@@ -1,12 +1,12 @@
 source "https://rubygems.org"
 
-gemspec
+gemspec path: ".."
 
-gem 'jquery-rails', '~> 4.2'
+gem 'jquery-rails', '~> 3.0'
 gem 'better_errors', '~> 0.9'
 gem 'binding_of_caller', '~> 0.7'
-gem 'pg', '~> 0.18'
-gem 'rspec-rails', '3.5.0'
+gem 'pg', '~> 0.17'
+gem 'rspec-rails', '3.0.0.beta1'
 gem 'capybara', '~> 2.1'
 gem 'factory_girl_rails', '~> 4.2'
 gem 'poltergeist', '~> 1.10'

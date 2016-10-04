@@ -12,3 +12,4 @@ coverage/*
 tmp
 .DS_Store
 *.gem
+Gemfile.lock

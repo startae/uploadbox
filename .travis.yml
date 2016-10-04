@@ -1,0 +1,15 @@
+language: ruby
+script: bundle exec rake spec
+
+rvm:
+  - 1.9.3
+  - 2.3.0
+gemfile:
+  - Gemfile
+
+matrix:
+  include:
+    - rvm: 1.9.3
+      gemfile: gemfiles/ruby193.gemfile
+    - rvm: 2.3.0
+      gemfile: gemfiles/ruby230.gemfile
