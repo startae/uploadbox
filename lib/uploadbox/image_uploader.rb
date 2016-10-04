@@ -22,6 +22,7 @@ module Uploadbox
       # @post.picture?
       define_method("#{upload_name}?") do
         upload = send("#{upload_name}_upload")
+
         !!(upload and (upload.processing? or upload.file?))
       end
 
@@ -47,6 +48,7 @@ module Uploadbox
               define_method(version) do
                 width = upload_versions[version][0]
                 height = upload_versions[version][1]
+
                 image.new("#{version}_#{options[:placeholder]}", width, height)
               end
             end
@@ -55,20 +57,22 @@ module Uploadbox
         end
       end
 
-      # @post.picture=(id)
-      define_method("#{upload_name}=") do |upload_or_id|
+      # @post.picture=(upload)
+      define_method("#{upload_name}=") do |upload_file|
         # deals with ie8 and ie9
-        if upload_or_id.is_a? ActionDispatch::Http::UploadedFile
-          upload = upload_class.create(file: upload_or_id)
+        if upload_file.is_a? ActionDispatch::Http::UploadedFile
+          upload = upload_class.create(file: upload_file)
+
           self.send("#{upload_name}_upload=", upload)
-        elsif upload_or_id.present?
-          self.send("#{upload_name}_upload=", upload_class.find(upload_or_id))
+        elsif upload_file.present?
+          self.send("#{upload_name}_upload=", upload_class.find(upload_file.id))
         end
       end
 
       # @post.remote_picture_url=('http://exemple.com/image.jpg')
       define_method("remote_#{upload_name}_url=") do |url|
         upload = Uploadbox.const_get(upload_class_name).create!(remote_file_url: url)
+
         self.send("#{upload_name}_upload=", upload)
       end
 
@@ -97,6 +101,7 @@ module Uploadbox
         unless Uploadbox.const_defined?(self.name.demodulize + 'Uploader')
           Uploadbox.const_set(self.name.demodulize + 'Uploader', dynamic_uploader)
         end
+
         dynamic_uploader.class_eval do
           upload_versions.each do |version_name, dimensions|
             if options[:retina]
@@ -127,11 +132,10 @@ module Uploadbox
             def original_file
               model.original_file
             end
-
           end
         end
-        mount_uploader :file, dynamic_uploader
 
+        mount_uploader :file, dynamic_uploader
       end
 
       has_one "#{upload_name}_upload".to_sym, as: :imageable,
@@ -139,7 +143,6 @@ module Uploadbox
                                               autosave: true
       accepts_nested_attributes_for "#{upload_name}_upload".to_sym
     end
-
 
     def uploads_many(upload_name, options={})
       default_options = {
@@ -166,18 +169,19 @@ module Uploadbox
         upload and upload.any?
       end
 
-      # @post.images=([id, id])
-      define_method("#{upload_name}=") do |ids|
-
+      # @post.images=([image, imae])
+      define_method("#{upload_name}=") do |uploads|
 
         # deals with ie8 and ie9
-        if ids[0].is_a? ActionDispatch::Http::UploadedFile
-          upload = upload_class.create(file: ids[0])
+        if uploads[0].is_a? ActionDispatch::Http::UploadedFile
+          upload = upload_class.create(file: uploads[0])
+
           self.send(upload_name).send('<<', upload)
         else
           self.send(upload_name).send('replace', [])
-          for id in ids.select(&:present?)
-            self.send(upload_name).send('<<', upload_class.find(id))
+
+          for upload in uploads.select(&:present?)
+            self.send(upload_name).send('<<', upload_class.find(upload.id))
           end
         end
       end
@@ -253,4 +257,3 @@ module Uploadbox
   end
 end
 ActiveRecord::Base.extend Uploadbox::ImageUploader
-
