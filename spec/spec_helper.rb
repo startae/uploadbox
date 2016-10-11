@@ -5,17 +5,17 @@ ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 require 'rspec/rails'
-require 'rspec/autorun'
 require 'factory_girl_rails'
 require 'database_cleaner'
 require 'capybara/poltergeist'
 require 'sham_rack'
 require 'pry'
 require 'dotenv'
+
 Dotenv.load Rails.root.join('.env')
 
 Capybara.javascript_driver = :poltergeist
-Capybara.default_wait_time = 20
+Capybara.default_max_wait_time = 20
 
 Rails.backtrace_cleaner.remove_silencers!
 
@@ -27,6 +27,12 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
+
+  config.infer_spec_type_from_file_location!
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation

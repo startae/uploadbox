@@ -11,34 +11,42 @@ describe '.uploads_many :images' do
   end
 
   let(:picture_file) { File.open('spec/support/images/picture.jpg') }
-  let(:img1) { Image.create_upload('upload_name' => 'images', 'file' => picture_file, 'imageable_type' => 'Post') }
-  let(:img2) { Image.create_upload('upload_name' => 'images', 'file' => picture_file, 'imageable_type' => 'Post') }
+  let(:img1) { Image.create(upload_name: 'images', file: picture_file, imageable_type: 'Post') }
+  let(:img2) { Image.create(upload_name: 'images', file: picture_file, imageable_type: 'Post') }
   let(:post) { Post.create(title: 'Lorem') }
+  let(:post_images1) { Uploadbox.const_get('PostImages').find(img1.id) }
+  let(:post_images2) { Uploadbox.const_get('PostImages').find(img2.id) }
 
   describe 'images attribute' do
     it 'works with #update' do
       post.update(images: [img1, img2])
-      post.images.should == [img1, img2]
+
+      expect(post.images).to eq [post_images1, post_images2]
     end
 
     it 'works as setter and getter' do
       post.images = [img1, img2]
-      post.images.should == [img1, img2]
+
+      expect(post.images).to eq [post_images1, post_images2]
     end
 
     it 'works as boolean' do
-      post.images?.should eql false
+      expect(post.images?).to be_falsy
+
       post.images = [img1]
-      post.images?.should == true
+
+      expect(post.images?).to be_truthy
     end
   end
 
   describe '#add_remote_image_url("http://exemple.com/picture.jpg")' do
     it 'creates upload' do
-      post.images?.should eql false
+      expect(post.images?).to be_falsy
+
       post = Post.new
       post.add_remote_image_url('http://www.example.com/picture.jpg')
-      post.images?.should == true
+
+      expect(post.images?).to be_truthy
     end
   end
 end

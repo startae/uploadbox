@@ -11,33 +11,38 @@ describe '.uploads_one :picture' do
   end
 
   let(:picture_file) { File.open('spec/support/images/picture.jpg') }
-  let(:picture) { Image.create_upload('upload_name' => 'picture', 'file' => picture_file, 'imageable_type' => 'Post') }
+  let(:picture) { Image.create(upload_name: 'picture', file: picture_file, imageable_type: 'Post') }
   let(:post) { Post.create(title: 'Lorem') }
+  let(:post_picture) { Uploadbox.const_get('PostPicture').find(picture.id) }
 
   describe 'picture attribute' do
     it 'works with #update' do
       post.update(picture: picture)
-      post.picture.should == picture
+
+      expect(post.picture).to eq post_picture
     end
 
     it 'works with setter' do
       post.picture = picture
-      post.picture.should == picture
+
+      expect(post.picture).to eq post_picture
     end
 
     it 'works as boolean' do
-      post.picture?.should eql false
+      expect(post.picture?).to be_falsy
+
       post.picture = picture
-      post.picture?.should == true
+
+      expect(post.picture?).to be_truthy
     end
   end
 
   describe '#remote_picture_url=("http://exemple.com/picture.jpg")' do
     it 'creates upload' do
       post = Post.new
-      post.picture?.should eql false
+      expect(post.picture?).to eql false
       post.remote_picture_url = 'http://www.example.com/picture.jpg'
-      post.picture?.should == true
+      expect(post.picture?).to eq(true)
     end
   end
 end
